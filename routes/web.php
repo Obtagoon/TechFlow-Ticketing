@@ -41,3 +41,7 @@ Route::get('/booking', function () {
 Route::get('/admin', function () {
     return view('components.layouts.admin');
 });
+
+Route::get('/admin', function () {
+    return view('admin.dashboard');
+});

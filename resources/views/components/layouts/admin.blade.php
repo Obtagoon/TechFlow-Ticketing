@@ -1,10 +1,11 @@
+@props(['title' => 'Dashboard'])
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title> - Admin TechFlow Ticketing</title>
+    <meta name="csrf-token" content="dummy-csrf-token">
+    <title>{{ $title }} - Admin TechFlow Ticketing</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -139,10 +140,7 @@
 
             <!-- Page Content -->
             <main class="p-4 lg:p-8">
-                <!-- KONTEN HALAMAN DIMASUKKAN DI SINI -->
-                <div class="text-gray-400">
-                    <p>Konten halaman akan ditampilkan di sini.</p>
-                </div>
+                {{ $slot }}
             </main>
         </div>
     </div>
