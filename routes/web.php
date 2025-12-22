@@ -13,3 +13,11 @@ Route::get('/login', function () {
 Route::get('/register', function () {
     return view('auth.register');
 });
+
+Route::get('/index', function () {
+    return view('movies.index');
+});
+
+Route::get('/show', function () {
+    return view('movies.show');
+});
