@@ -29,3 +29,11 @@ Route::get('/seats', function () {
 Route::get('/checkout', function () {
     return view('booking.checkout');
 });
+
+Route::get('/tiket', function () {
+    return view('booking.tiket');
+});
+
+Route::get('/booking', function () {
+    return view('user.booking');
+});
