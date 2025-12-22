@@ -17,7 +17,3 @@ Route::get('/register', function () {
 Route::get('/index', function () {
     return view('movies.index');
 });
-
-Route::get('/show', function () {
-    return view('movies.show');
-});
