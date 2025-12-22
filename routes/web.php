@@ -21,3 +21,11 @@ Route::get('/index', function () {
 Route::get('/show', function () {
     return view('movies.show');
 });
+
+Route::get('/seats', function () {
+    return view('booking.seats');
+});
+
+Route::get('/checkout', function () {
+    return view('booking.checkout');
+});
