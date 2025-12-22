@@ -1,4 +1,4 @@
-<x-layouts.app title="Daftar">
+<x-layouts.app title="Masuk">
 <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full">
         
@@ -7,22 +7,14 @@
             <a href="#" class="inline-flex items-center gap-2 mb-4">
                 <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-24 h-24">
             </a>
-            <h1 class="text-3xl font-bold text-white">Buat akun Baru</h1>
-            <p class="text-gray-400 mt-2">Daftar untuk menikmati kemudahan booking tiket</p>
+            <h1 class="text-3xl font-bold text-white">Selamat Datang Kembali</h1>
+            <p class="text-gray-400 mt-2">Masuk ke akun TechFlow Ticketing Anda</p>
         </div>
 
-        <!-- Register Form -->
+        <!-- Login Form -->
         <div class="bg-[#16162a] rounded-2xl p-8 border border-white/10 shadow-xl">
             <form method="POST" action="#" class="space-y-6">
                 @csrf
-
-                <!-- Name -->
-                <div>
-                    <label for="name" class="block text-sm font-medium text-gray-300 mb-2">Nama Lengkap</label>
-                    <input type="text" id="name" name="name" value="{{ old('name') }}" required autofocus
-                           class="w-full px-4 py-3 bg-[#0f0f1a] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#e50914] focus:border-transparent transition-all"
-                           placeholder="John Doe">
-                </div>
 
                 <!-- Email -->
                 <div>
@@ -30,14 +22,6 @@
                     <input type="email" id="email" name="email" value="{{ old('email') }}" required autofocus
                            class="w-full px-4 py-3 bg-[#0f0f1a] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#e50914] focus:border-transparent transition-all"
                            placeholder="nama@email.com">
-                </div>
-
-                <!-- Phone -->
-                <div>
-                    <label for="phone" class="block text-sm font-medium text-gray-300 mb-2">Nomor Telepon <span class="text-gray-500">(opsional)</span></label>
-                    <input type="tel" id="phone" name="phone" value="{{ old('phone') }}"
-                           class="w-full px-4 py-3 bg-[#0f0f1a] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#e50914] focus:border-transparent transition-all"
-                           placeholder="08123456789">
                 </div>
 
                 <!-- Password -->
@@ -59,12 +43,12 @@
                     </div>
                 </div>
 
-                <!-- Confirm Password -->
-                <div>
-                    <label for="password_confirmation" class="block text-sm font-medium text-gray-300 mb-2">Konfirmasi Password</label>
-                    <input type="password" id="password_confirmation" name="password_confirmation" required
-                           class="w-full px-4 py-3 bg-[#0f0f1a] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#e50914] focus:border-transparent transition-all"
-                           placeholder="Ulangi password">
+                <!-- Remember Me -->
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" name="remember" class="w-4 h-4 rounded border-white/20 bg-[#0f0f1a] text-[#e50914] focus:ring-[#e50914] focus:ring-offset-0">
+                        <span class="text-sm text-gray-400">Ingat saya</span>
+                    </label>
                 </div>
 
                 <!-- Submit Button -->
@@ -73,15 +57,6 @@
                 </button>
             </form>
 
-            <!-- Terms -->
-            <p class="mt-6 text-center text-xs text-gray-500">
-                Dengan mendaftar, Anda menyetujui
-                <a href="#" class="text-[#e50914] hover:underline">Syarat & Ketentuan</a>
-                dan
-                <a href="#" class="text-[#e50914] hover:underline">Kebijakan Privasi</a>
-                kami.
-            </p>
-
             <!-- Divider -->
             <div class="my-6 flex items-center">
                 <div class="flex-1 border-t border-white/10"></div>
@@ -89,11 +64,11 @@
                 <div class="flex-1 border-t border-white/10"></div>
             </div>
 
-            <!-- Login Link -->
+            <!-- Register Link -->
             <p class="text-center text-gray-400">
-                Sudah punya akun?
+                Belum punya akun?
                 <a href="#" class="text-[#e50914] hover:text-[#f5c518] font-medium transition-colors">
-                    Masuk di sini
+                    Daftar sekarang
                 </a>
             </p>
         </div>
