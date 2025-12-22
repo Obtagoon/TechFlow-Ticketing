@@ -37,3 +37,7 @@ Route::get('/tiket', function () {
 Route::get('/booking', function () {
     return view('user.booking');
 });
+
+Route::get('/admin', function () {
+    return view('components.layouts.admin');
+});
