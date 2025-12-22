@@ -25,3 +25,7 @@ Route::get('/show', function () {
 Route::get('/seats', function () {
     return view('booking.seats');
 });
+
+Route::get('/checkout', function () {
+    return view('booking.checkout');
+});
