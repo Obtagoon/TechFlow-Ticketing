@@ -45,3 +45,11 @@ Route::get('/admin', function () {
 Route::get('/admin', function () {
     return view('admin.dashboard');
 });
+
+Route::get('/admin/showtimes', function () {
+    return view('admin.showtimes.index');
+})->name('admin.showtimes.index');
+
+Route::get('/admin/showtimes/create', function () {
+    return view('admin.showtimes.create');
+})->name('admin.showtimes.create');
