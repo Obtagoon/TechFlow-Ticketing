@@ -21,3 +21,36 @@ Route::get('/index', function () {
 Route::get('/show', function () {
     return view('movies.show');
 });
+
+Route::get('/seats', function () {
+    return view('booking.seats');
+});
+
+Route::get('/checkout', function () {
+    return view('booking.checkout');
+});
+
+Route::get('/tiket', function () {
+    return view('booking.tiket');
+});
+
+Route::get('/booking', function () {
+    return view('user.booking');
+});
+
+Route::get('/admin', function () {
+    return view('components.layouts.admin');
+});
+
+Route::get('/admin', function () {
+    return view('admin.dashboard');
+});
+
+Route::get('/admin/showtimes', function () {
+    return view('admin.showtimes.index');
+})->name('admin.showtimes.index');
+
+Route::get('/admin/showtimes/create', function () {
+    return view('admin.showtimes.create');
+})->name('admin.showtimes.create');
+
