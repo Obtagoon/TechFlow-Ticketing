@@ -53,3 +53,4 @@ Route::get('/admin/showtimes', function () {
 Route::get('/admin/showtimes/create', function () {
     return view('admin.showtimes.create');
 })->name('admin.showtimes.create');
+
