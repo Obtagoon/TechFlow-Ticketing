@@ -1,11 +1,14 @@
 <x-layouts.app title="Masuk">
 <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full">
-        
         <!-- Logo -->
         <div class="text-center mb-8">
-            <a href="#" class="inline-flex items-center gap-2 mb-4">
-                <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-24 h-24">
+            <a href="{{ route('home') }}" class="inline-flex items-center gap-2 mb-4">
+                <div class="w-12 h-12 bg-gradient-to-br from-[#e50914] to-[#b20710] rounded-xl flex items-center justify-center">
+                    <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"/>
+                    </svg>
+                </div>
             </a>
             <h1 class="text-3xl font-bold text-white">Selamat Datang Kembali</h1>
             <p class="text-gray-400 mt-2">Masuk ke akun TechFlow Ticketing Anda</p>
@@ -13,15 +16,18 @@
 
         <!-- Login Form -->
         <div class="bg-[#16162a] rounded-2xl p-8 border border-white/10 shadow-xl">
-            <form method="POST" action="#" class="space-y-6">
+            <form method="POST" action="{{ route('login') }}" class="space-y-6">
                 @csrf
 
                 <!-- Email -->
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email</label>
                     <input type="email" id="email" name="email" value="{{ old('email') }}" required autofocus
-                           class="w-full px-4 py-3 bg-[#0f0f1a] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#e50914] focus:border-transparent transition-all"
+                           class="w-full px-4 py-3 bg-[#0f0f1a] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#e50914] focus:border-transparent transition-all @error('email') border-red-500 @enderror"
                            placeholder="nama@email.com">
+                    @error('email')
+                        <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <!-- Password -->
@@ -29,7 +35,7 @@
                     <label for="password" class="block text-sm font-medium text-gray-300 mb-2">Password</label>
                     <div class="relative" x-data="{ show: false }">
                         <input :type="show ? 'text' : 'password'" id="password" name="password" required
-                               class="w-full px-4 py-3 bg-[#0f0f1a] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#e50914] focus:border-transparent transition-all"
+                               class="w-full px-4 py-3 bg-[#0f0f1a] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#e50914] focus:border-transparent transition-all @error('password') border-red-500 @enderror"
                                placeholder="••••••••">
                         <button type="button" @click="show = !show" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white">
                             <svg x-show="!show" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -41,6 +47,9 @@
                             </svg>
                         </button>
                     </div>
+                    @error('password')
+                        <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <!-- Remember Me -->
@@ -67,7 +76,7 @@
             <!-- Register Link -->
             <p class="text-center text-gray-400">
                 Belum punya akun?
-                <a href="#" class="text-[#e50914] hover:text-[#f5c518] font-medium transition-colors">
+                <a href="{{ route('register') }}" class="text-[#e50914] hover:text-[#f5c518] font-medium transition-colors">
                     Daftar sekarang
                 </a>
             </p>
