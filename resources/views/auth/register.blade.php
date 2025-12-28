@@ -1,43 +1,55 @@
 <x-layouts.app title="Daftar">
 <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full">
-        
         <!-- Logo -->
         <div class="text-center mb-8">
-            <a href="#" class="inline-flex items-center gap-2 mb-4">
-                <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-24 h-24">
+            <a href="{{ route('home') }}" class="inline-flex items-center gap-2 mb-4">
+                <div class="w-12 h-12 bg-gradient-to-br from-[#e50914] to-[#b20710] rounded-xl flex items-center justify-center">
+                    <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"/>
+                    </svg>
+                </div>
             </a>
-            <h1 class="text-3xl font-bold text-white">Buat akun Baru</h1>
+            <h1 class="text-3xl font-bold text-white">Buat Akun Baru</h1>
             <p class="text-gray-400 mt-2">Daftar untuk menikmati kemudahan booking tiket</p>
         </div>
 
         <!-- Register Form -->
         <div class="bg-[#16162a] rounded-2xl p-8 border border-white/10 shadow-xl">
-            <form method="POST" action="#" class="space-y-6">
+            <form method="POST" action="{{ route('register') }}" class="space-y-6">
                 @csrf
 
                 <!-- Name -->
                 <div>
                     <label for="name" class="block text-sm font-medium text-gray-300 mb-2">Nama Lengkap</label>
                     <input type="text" id="name" name="name" value="{{ old('name') }}" required autofocus
-                           class="w-full px-4 py-3 bg-[#0f0f1a] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#e50914] focus:border-transparent transition-all"
+                           class="w-full px-4 py-3 bg-[#0f0f1a] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#e50914] focus:border-transparent transition-all @error('name') border-red-500 @enderror"
                            placeholder="John Doe">
+                    @error('name')
+                        <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <!-- Email -->
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email</label>
-                    <input type="email" id="email" name="email" value="{{ old('email') }}" required autofocus
-                           class="w-full px-4 py-3 bg-[#0f0f1a] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#e50914] focus:border-transparent transition-all"
+                    <input type="email" id="email" name="email" value="{{ old('email') }}" required
+                           class="w-full px-4 py-3 bg-[#0f0f1a] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#e50914] focus:border-transparent transition-all @error('email') border-red-500 @enderror"
                            placeholder="nama@email.com">
+                    @error('email')
+                        <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <!-- Phone -->
                 <div>
                     <label for="phone" class="block text-sm font-medium text-gray-300 mb-2">Nomor Telepon <span class="text-gray-500">(opsional)</span></label>
                     <input type="tel" id="phone" name="phone" value="{{ old('phone') }}"
-                           class="w-full px-4 py-3 bg-[#0f0f1a] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#e50914] focus:border-transparent transition-all"
+                           class="w-full px-4 py-3 bg-[#0f0f1a] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#e50914] focus:border-transparent transition-all @error('phone') border-red-500 @enderror"
                            placeholder="08123456789">
+                    @error('phone')
+                        <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <!-- Password -->
@@ -45,8 +57,8 @@
                     <label for="password" class="block text-sm font-medium text-gray-300 mb-2">Password</label>
                     <div class="relative" x-data="{ show: false }">
                         <input :type="show ? 'text' : 'password'" id="password" name="password" required
-                               class="w-full px-4 py-3 bg-[#0f0f1a] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#e50914] focus:border-transparent transition-all"
-                               placeholder="••••••••">
+                               class="w-full px-4 py-3 bg-[#0f0f1a] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#e50914] focus:border-transparent transition-all @error('password') border-red-500 @enderror"
+                               placeholder="Minimal 8 karakter">
                         <button type="button" @click="show = !show" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white">
                             <svg x-show="!show" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -57,6 +69,9 @@
                             </svg>
                         </button>
                     </div>
+                    @error('password')
+                        <p class="mt-2 text-sm text-red-400">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <!-- Confirm Password -->
@@ -69,7 +84,7 @@
 
                 <!-- Submit Button -->
                 <button type="submit" class="w-full py-3 px-4 bg-gradient-to-r from-[#e50914] to-[#b20710] text-white font-semibold rounded-xl hover:opacity-90 transition-opacity shadow-lg shadow-red-500/25">
-                    Masuk
+                    Daftar Sekarang
                 </button>
             </form>
 
@@ -92,7 +107,7 @@
             <!-- Login Link -->
             <p class="text-center text-gray-400">
                 Sudah punya akun?
-                <a href="#" class="text-[#e50914] hover:text-[#f5c518] font-medium transition-colors">
+                <a href="{{ route('login') }}" class="text-[#e50914] hover:text-[#f5c518] font-medium transition-colors">
                     Masuk di sini
                 </a>
             </p>
