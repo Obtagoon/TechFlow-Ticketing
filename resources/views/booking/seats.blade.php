@@ -1,7 +1,7 @@
 <x-layouts.app :title="'Pilih Kursi - ' . $showtime->movie->title">
 <div class="py-8">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Bagian Header -->
+        <!-- Header -->
         <div class="mb-8">
             <a href="{{ route('movies.show', $showtime->movie) }}" class="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-4 transition-colors">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -13,20 +13,20 @@
         </div>
 
         <div class="grid lg:grid-cols-3 gap-8">
-            <!-- Peta Kursi -->
+            <!-- Seat Map -->
             <div class="lg:col-span-2">
                 <div class="bg-[#16162a] rounded-xl p-6 border border-white/10">
-                    <!-- Layar -->
+                    <!-- Screen -->
                     <div class="mb-8">
                         <div class="h-2 bg-gradient-to-r from-transparent via-white to-transparent rounded-full mb-2"></div>
                         <p class="text-center text-sm text-gray-500">LAYAR</p>
                     </div>
 
-                    <!-- Form Pemilihan Kursi -->
+                    <!-- Seat Selection Form -->
                     <form action="{{ route('booking.seats', $showtime) }}" method="POST" id="seat-form">
                         @csrf
                         
-                        <!-- Grid Kursi -->
+                        <!-- Seats Grid -->
                         <div class="space-y-3 mb-8" x-data="seatSelector()">
                             @foreach($seatsByRow as $row => $seats)
                                 <div class="flex items-center justify-center gap-2">
@@ -64,7 +64,7 @@
                                 </div>
                             @endforeach
 
-                            <!-- Keterangan -->
+                            <!-- Legend -->
                             <div class="flex items-center justify-center gap-6 mt-6 pt-6 border-t border-white/10">
                                 <div class="flex items-center gap-2">
                                     <div class="w-6 h-6 bg-[#0f0f1a] border border-white/20 rounded-t-lg"></div>
@@ -85,7 +85,7 @@
                             <p class="text-red-400 text-sm mb-4">{{ $message }}</p>
                         @enderror
 
-                        <!-- Tombol Submit Mobile -->
+                        <!-- Mobile Submit Button -->
                         <button type="submit" id="mobile-submit" disabled
                                 class="lg:hidden w-full py-3 bg-gradient-to-r from-[#e50914] to-[#b20710] text-white font-semibold rounded-xl disabled:opacity-50 disabled:cursor-not-allowed transition-opacity">
                             Lanjut ke Pembayaran
@@ -94,10 +94,10 @@
                 </div>
             </div>
 
-            <!-- Ringkasan Pemesanan -->
+            <!-- Booking Summary -->
             <div class="lg:col-span-1">
                 <div class="bg-[#16162a] rounded-xl p-6 border border-white/10 sticky top-24">
-                    <!-- Informasi Film -->
+                    <!-- Movie Info -->
                     <div class="flex gap-4 mb-6 pb-6 border-b border-white/10">
                         <img src="{{ $showtime->movie->poster_url }}" alt="{{ $showtime->movie->title }}" 
                              class="w-20 h-auto rounded-lg">
@@ -107,7 +107,7 @@
                         </div>
                     </div>
 
-                    <!-- Detail Jadwal -->
+                    <!-- Showtime Details -->
                     <div class="space-y-3 mb-6 pb-6 border-b border-white/10">
                         <div class="flex justify-between">
                             <span class="text-gray-400">Bioskop</span>
@@ -131,7 +131,7 @@
                         </div>
                     </div>
 
-                    <!-- Kursi Terpilih -->
+                    <!-- Selected Seats -->
                     <div class="mb-6 pb-6 border-b border-white/10">
                         <div class="flex justify-between mb-2">
                             <span class="text-gray-400">Kursi Dipilih</span>
@@ -143,13 +143,13 @@
                         </div>
                     </div>
 
-                    <!-- Total Harga -->
+                    <!-- Total -->
                     <div class="flex justify-between mb-6">
                         <span class="text-lg font-semibold text-white">Total</span>
                         <span class="text-lg font-bold text-[#e50914]" id="total-price">Rp 0</span>
                     </div>
 
-                    <!-- Tombol Submit Desktop -->
+                    <!-- Submit Button -->
                     <button type="submit" form="seat-form" id="desktop-submit" disabled
                             class="hidden lg:block w-full py-3 bg-gradient-to-r from-[#e50914] to-[#b20710] text-white font-semibold rounded-xl disabled:opacity-50 disabled:cursor-not-allowed transition-opacity hover:opacity-90">
                         Lanjut ke Pembayaran
@@ -197,7 +197,7 @@
                     desktopBtn.disabled = true;
                 }
                 
-                // Batas maksimal 6 kursi
+                // Limit to 6 seats
                 if (count > 6) {
                     event.target.checked = false;
                     alert('Maksimal 6 kursi per transaksi');
