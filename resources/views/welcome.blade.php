@@ -1,12 +1,16 @@
 <x-layouts.app title="Beranda">
-    <!-- Hero Section -->
+<!-- Hero Section -->
 <section class="relative min-h-[100vh] flex items-center justify-center overflow-hidden">
-    <!-- Background Gradient -->
+    <!-- Latar Belakang -->
     <div class="absolute inset-0 z-0">
-        <div class="absolute inset-0 bg-gradient-to-br from-[#1a1a2e] via-[#16162a] to-[#0f0f1a]"></div>
+        @if($nowPlaying->first())
+            <img src="{{ $nowPlaying->first()->backdrop_url }}" alt="" class="w-full h-full object-cover opacity-40">
+        @endif
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0f0f1a] via-[#0f0f1a]/80 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-[#0f0f1a] via-transparent to-[#0f0f1a]"></div>
     </div>
 
-    <!-- Content -->
+    <!-- Konten Hero -->
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6">
             <span class="bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
@@ -21,7 +25,7 @@
             Pesan tiket bioskop online dengan mudah dan cepat. Pilih film favorit, pilih kursi, dan nikmati filmnya!
         </p>
         <div class="flex flex-wrap items-center justify-center gap-4">
-            <a href="#" class="px-8 py-4 bg-gradient-to-r from-[#e50914] to-[#b20710] text-white font-semibold rounded-full hover:opacity-90 transition-all transform hover:scale-105 shadow-lg shadow-red-500/25">
+            <a href="{{ route('movies.index') }}" class="px-8 py-4 bg-gradient-to-r from-[#e50914] to-[#b20710] text-white font-semibold rounded-full hover:opacity-90 transition-all transform hover:scale-105 shadow-lg shadow-red-500/25">
                 Lihat Semua Film
             </a>
             <a href="#now-playing" class="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-full hover:bg-white/20 transition-all border border-white/20">
@@ -30,7 +34,7 @@
         </div>
     </div>
 
-    <!-- Scroll Indicator -->
+    <!-- Indikator Scroll -->
     <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
         <svg class="w-6 h-6 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
@@ -38,7 +42,7 @@
     </div>
 </section>
 
-<!-- Now Playing Section -->
+<!-- Bagian Sedang Tayang -->
 <section id="now-playing" class="py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between mb-8">
@@ -46,7 +50,7 @@
                 <h2 class="text-2xl md:text-3xl font-bold">Sedang Tayang</h2>
                 <p class="text-gray-400 mt-1">Film-film terbaik yang sedang tayang di bioskop</p>
             </div>
-            <a href="#" class="text-[#e50914] hover:text-[#f5c518] font-medium transition-colors flex items-center gap-2">
+            <a href="{{ route('movies.index') }}?status=now_playing" class="text-[#e50914] hover:text-[#f5c518] font-medium transition-colors flex items-center gap-2">
                 Lihat Semua
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -54,81 +58,49 @@
             </a>
         </div>
 
-        <div class="flex gap-6 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-[#e50914] scrollbar-track-[#16162a] scroll-smooth snap-x snap-mandatory">
-            <!-- Movie 1 -->
-            <a href="#" class="group flex-shrink-0 w-[280px] md:w-[300px] lg:w-[320px] snap-start">
-                <div class="relative aspect-[2/3] rounded-xl overflow-hidden mb-3 bg-[#16162a]">
-                    <img src="https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg" alt="Venom 3" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                        <div class="absolute bottom-4 left-4 right-4">
-                            <span class="inline-flex items-center gap-1 px-3 py-1 bg-[#e50914] text-white text-xs font-semibold rounded-full">
-                                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
-                                </svg>
-                                Beli Tiket
-                            </span>
+        @if($nowPlaying->isEmpty())
+            <div class="text-center py-12 text-gray-400">
+                <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"/>
+                </svg>
+                <p>Belum ada film yang sedang tayang</p>
+            </div>
+        @else
+            <div class="flex gap-6 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-[#e50914] scrollbar-track-[#16162a] scroll-smooth snap-x snap-mandatory">
+                @foreach($nowPlaying as $movie)
+                    <a href="{{ route('movies.show', $movie) }}" class="group flex-shrink-0 w-[280px] md:w-[300px] lg:w-[320px] snap-start">
+                        <div class="relative aspect-[2/3] rounded-xl overflow-hidden mb-3">
+                            <img src="{{ $movie->poster_url }}" alt="{{ $movie->title }}" 
+                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                                <div class="absolute bottom-4 left-4 right-4">
+                                    <span class="inline-flex items-center gap-1 px-3 py-1 bg-[#e50914] text-white text-xs font-semibold rounded-full">
+                                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
+                                        </svg>
+                                        Beli Tiket
+                                    </span>
+                                </div>
+                            </div>
+                            @if($movie->rating > 0)
+                                <div class="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 bg-black/60 backdrop-blur-sm rounded-lg">
+                                    <svg class="w-4 h-4 text-[#f5c518]" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                    </svg>
+                                    <span class="text-white text-sm font-medium">{{ number_format($movie->rating, 1) }}</span>
+                                </div>
+                            @endif
                         </div>
-                    </div>
-                    <div class="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 bg-black/60 backdrop-blur-sm rounded-lg">
-                        <svg class="w-4 h-4 text-[#f5c518]" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <span class="text-white text-sm font-medium">8.5</span>
-                    </div>
-                </div>
-                <h3 class="font-semibold text-white group-hover:text-[#e50914] transition-colors line-clamp-1">Venom: The Last Dance</h3>
-                <p class="text-sm text-gray-400 line-clamp-1">Action, Sci-Fi</p>
-            </a>
-
-            <!-- Movie 2 -->
-            <a href="#" class="group flex-shrink-0 w-[280px] md:w-[300px] lg:w-[320px] snap-start">
-                <div class="relative aspect-[2/3] rounded-xl overflow-hidden mb-3 bg-[#16162a]">
-                    <img src="https://image.tmdb.org/t/p/w500/aosm8NMQ3UyoBVpSxyimorCQykC.jpg" alt="Gladiator 2" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    <div class="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 bg-black/60 backdrop-blur-sm rounded-lg">
-                        <svg class="w-4 h-4 text-[#f5c518]" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <span class="text-white text-sm font-medium">7.9</span>
-                    </div>
-                </div>
-                <h3 class="font-semibold text-white group-hover:text-[#e50914] transition-colors line-clamp-1">Gladiator II</h3>
-                <p class="text-sm text-gray-400 line-clamp-1">Action, Drama</p>
-            </a>
-
-            <!-- Movie 3 -->
-            <a href="#" class="group flex-shrink-0 w-[280px] md:w-[300px] lg:w-[320px] snap-start">
-                <div class="relative aspect-[2/3] rounded-xl overflow-hidden mb-3 bg-[#16162a]">
-                    <img src="https://image.tmdb.org/t/p/w500/vpnVM9B6NMmQpWeZvzLvDESb2QY.jpg" alt="Moana 2" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    <div class="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 bg-black/60 backdrop-blur-sm rounded-lg">
-                        <svg class="w-4 h-4 text-[#f5c518]" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <span class="text-white text-sm font-medium">7.2</span>
-                    </div>
-                </div>
-                <h3 class="font-semibold text-white group-hover:text-[#e50914] transition-colors line-clamp-1">Moana 2</h3>
-                <p class="text-sm text-gray-400 line-clamp-1">Animation, Adventure</p>
-            </a>
-
-            <!-- Movie 4 -->
-            <a href="#" class="group flex-shrink-0 w-[280px] md:w-[300px] lg:w-[320px] snap-start">
-                <div class="relative aspect-[2/3] rounded-xl overflow-hidden mb-3 bg-[#16162a]">
-                    <img src="https://image.tmdb.org/t/p/w500/wWba3TaojhK7NdycRhoQpsG0FaH.jpg" alt="Wicked" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    <div class="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 bg-black/60 backdrop-blur-sm rounded-lg">
-                        <svg class="w-4 h-4 text-[#f5c518]" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <span class="text-white text-sm font-medium">8.1</span>
-                    </div>
-                </div>
-                <h3 class="font-semibold text-white group-hover:text-[#e50914] transition-colors line-clamp-1">Wicked</h3>
-                <p class="text-sm text-gray-400 line-clamp-1">Musical, Fantasy</p>
-            </a>
-        </div>
+                        <h3 class="font-semibold text-white group-hover:text-[#e50914] transition-colors line-clamp-1">{{ $movie->title }}</h3>
+                        <p class="text-sm text-gray-400 line-clamp-1">{{ $movie->genre }}</p>
+                    </a>
+                @endforeach
+            </div>
+        @endif
     </div>
 </section>
 
-<!-- Coming Soon Section -->
+<!-- Bagian Segera Tayang -->
 <section class="py-16 bg-[#0a0a12]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between mb-8">
@@ -136,7 +108,7 @@
                 <h2 class="text-2xl md:text-3xl font-bold">Segera Tayang</h2>
                 <p class="text-gray-400 mt-1">Film-film yang akan segera hadir di bioskop</p>
             </div>
-            <a href="#" class="text-[#e50914] hover:text-[#f5c518] font-medium transition-colors flex items-center gap-2">
+            <a href="{{ route('movies.index') }}?status=coming_soon" class="text-[#e50914] hover:text-[#f5c518] font-medium transition-colors flex items-center gap-2">
                 Lihat Semua
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -144,71 +116,40 @@
             </a>
         </div>
 
-        <div class="flex gap-6 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-[#e50914] scrollbar-track-[#16162a] scroll-smooth snap-x snap-mandatory">
-            <!-- Coming Soon 1 -->
-            <a href="#" class="group flex-shrink-0 w-[280px] md:w-[300px] lg:w-[320px] snap-start">
-                <div class="relative aspect-[2/3] rounded-xl overflow-hidden mb-3 bg-[#16162a]">
-                    <img src="https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg" alt="Avatar 3" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    <div class="absolute top-3 left-3">
-                        <span class="px-3 py-1 bg-[#f5c518] text-black text-xs font-bold rounded-full">COMING SOON</span>
-                    </div>
-                    <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
-                        <p class="text-sm text-gray-300">19 Dec 2025</p>
-                    </div>
-                </div>
-                <h3 class="font-semibold text-white group-hover:text-[#e50914] transition-colors line-clamp-1">Avatar 3</h3>
-                <p class="text-sm text-gray-400 line-clamp-1">Sci-Fi, Adventure</p>
-            </a>
-
-            <!-- Coming Soon 2 -->
-            <a href="#" class="group flex-shrink-0 w-[280px] md:w-[300px] lg:w-[320px] snap-start">
-                <div class="relative aspect-[2/3] rounded-xl overflow-hidden mb-3 bg-[#16162a]">
-                    <img src="https://image.tmdb.org/t/p/w500/lqoMzCcZYEFK729d6qzt349fB4o.jpg" alt="Captain America" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    <div class="absolute top-3 left-3">
-                        <span class="px-3 py-1 bg-[#f5c518] text-black text-xs font-bold rounded-full">COMING SOON</span>
-                    </div>
-                    <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
-                        <p class="text-sm text-gray-300">14 Feb 2025</p>
-                    </div>
-                </div>
-                <h3 class="font-semibold text-white group-hover:text-[#e50914] transition-colors line-clamp-1">Captain America: Brave New World</h3>
-                <p class="text-sm text-gray-400 line-clamp-1">Action, Superhero</p>
-            </a>
-
-            <!-- Coming Soon 3 -->
-            <a href="#" class="group flex-shrink-0 w-[280px] md:w-[300px] lg:w-[320px] snap-start">
-                <div class="relative aspect-[2/3] rounded-xl overflow-hidden mb-3 bg-[#16162a]">
-                    <img src="https://image.tmdb.org/t/p/w500/d5NXSklXo0qyIYkgV94XAgMIckC.jpg" alt="Dune 3" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    <div class="absolute top-3 left-3">
-                        <span class="px-3 py-1 bg-[#f5c518] text-black text-xs font-bold rounded-full">COMING SOON</span>
-                    </div>
-                    <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
-                        <p class="text-sm text-gray-300">18 Dec 2026</p>
-                    </div>
-                </div>
-                <h3 class="font-semibold text-white group-hover:text-[#e50914] transition-colors line-clamp-1">Dune: Messiah</h3>
-                <p class="text-sm text-gray-400 line-clamp-1">Sci-Fi, Drama</p>
-            </a>
-
-            <!-- Coming Soon 4 -->
-            <a href="#" class="group flex-shrink-0 w-[280px] md:w-[300px] lg:w-[320px] snap-start">
-                <div class="relative aspect-[2/3] rounded-xl overflow-hidden mb-3 bg-[#16162a]">
-                    <img src="https://image.tmdb.org/t/p/w500/rz8GGX5Id2hCW1PzVCm8kVmS8lr.jpg" alt="Sonic 3" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    <div class="absolute top-3 left-3">
-                        <span class="px-3 py-1 bg-[#f5c518] text-black text-xs font-bold rounded-full">COMING SOON</span>
-                    </div>
-                    <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
-                        <p class="text-sm text-gray-300">20 Dec 2024</p>
-                    </div>
-                </div>
-                <h3 class="font-semibold text-white group-hover:text-[#e50914] transition-colors line-clamp-1">Sonic the Hedgehog 3</h3>
-                <p class="text-sm text-gray-400 line-clamp-1">Animation, Adventure</p>
-            </a>
-        </div>
+        @if($comingSoon->isEmpty())
+            <div class="text-center py-12 text-gray-400">
+                <p>Belum ada film yang akan datang</p>
+            </div>
+        @else
+            <div class="flex gap-6 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-[#e50914] scrollbar-track-[#16162a] scroll-smooth snap-x snap-mandatory">
+                @foreach($comingSoon as $movie)
+                    <a href="{{ route('movies.show', $movie) }}" class="group flex-shrink-0 w-[280px] md:w-[300px] lg:w-[320px] snap-start">
+                        <div class="relative aspect-[2/3] rounded-xl overflow-hidden mb-3">
+                            <img src="{{ $movie->poster_url }}" alt="{{ $movie->title }}" 
+                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                            <div class="absolute top-3 left-3">
+                                <span class="px-3 py-1 bg-[#f5c518] text-black text-xs font-bold rounded-full">
+                                    COMING SOON
+                                </span>
+                            </div>
+                            @if($movie->release_date)
+                                <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
+                                    <p class="text-sm text-gray-300">
+                                        {{ $movie->release_date->format('d M Y') }}
+                                    </p>
+                                </div>
+                            @endif
+                        </div>
+                        <h3 class="font-semibold text-white group-hover:text-[#e50914] transition-colors line-clamp-1">{{ $movie->title }}</h3>
+                        <p class="text-sm text-gray-400 line-clamp-1">{{ $movie->genre }}</p>
+                    </a>
+                @endforeach
+            </div>
+        @endif
     </div>
 </section>
 
-<!-- Features Section -->
+<!-- Bagian Fitur -->
 <section class="py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
@@ -217,7 +158,7 @@
         </div>
 
         <div class="grid md:grid-cols-3 gap-8">
-            <!-- Feature 1 -->
+            <!-- Fitur 1 -->
             <div class="text-center p-8 rounded-2xl bg-gradient-to-b from-[#16162a] to-transparent border border-white/5 hover:border-[#e50914]/30 transition-colors">
                 <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-[#e50914] to-[#b20710] flex items-center justify-center">
                     <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -228,7 +169,7 @@
                 <p class="text-gray-400">Pesan tiket dalam hitungan detik. Tanpa antri, tanpa ribet.</p>
             </div>
 
-            <!-- Feature 2 -->
+            <!-- Fitur 2 -->
             <div class="text-center p-8 rounded-2xl bg-gradient-to-b from-[#16162a] to-transparent border border-white/5 hover:border-[#e50914]/30 transition-colors">
                 <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-[#f5c518] to-[#d4a816] flex items-center justify-center">
                     <svg class="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -239,7 +180,7 @@
                 <p class="text-gray-400">Tiket langsung tersedia di HP Anda. Tinggal scan dan masuk.</p>
             </div>
 
-            <!-- Feature 3 -->
+            <!-- Fitur 3 -->
             <div class="text-center p-8 rounded-2xl bg-gradient-to-b from-[#16162a] to-transparent border border-white/5 hover:border-[#e50914]/30 transition-colors">
                 <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center">
                     <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
