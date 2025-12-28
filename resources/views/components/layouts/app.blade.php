@@ -25,7 +25,7 @@
             <div class="flex items-center justify-between h-16">
                 <!-- Logo -->
                 <a href="#" class="flex items-center gap-2">
-                    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-12 h-12">
+                    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-10 h-10">
                     <span class="text-xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
                         TechFlow Ticketing
                     </span>
