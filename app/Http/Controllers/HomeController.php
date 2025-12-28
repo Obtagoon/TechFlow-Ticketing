@@ -100,6 +100,9 @@ class HomeController extends Controller
                 });
             });
 
-        return view('movies.show', compact('movie', 'showtimes'));
+        // Get available dates for the date selector tabs
+        $dates = $showtimes->keys()->sort()->values();
+
+        return view('movies.show', compact('movie', 'showtimes', 'dates'));
     }
 }
