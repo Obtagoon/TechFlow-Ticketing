@@ -1,13 +1,15 @@
-<x-layouts.app title="E-Ticket - TF1ABC2DEF">
+<x-layouts.app :title="'E-Ticket - ' . $booking->booking_code">
 <div class="py-8">
     <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Success Message -->
-        <div class="bg-green-500/20 border border-green-500/50 rounded-xl p-4 mb-8 flex items-center gap-3">
-            <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-            <span class="text-green-400">Pembayaran berhasil! E-Ticket Anda sudah siap.</span>
-        </div>
+        @if(session('success'))
+            <div class="bg-green-500/20 border border-green-500/50 rounded-xl p-4 mb-8 flex items-center gap-3">
+                <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span class="text-green-400">{{ session('success') }}</span>
+            </div>
+        @endif
 
         <!-- Ticket Card -->
         <div class="bg-[#16162a] rounded-2xl overflow-hidden border border-white/10 shadow-xl">
@@ -25,12 +27,12 @@
             <!-- Movie Info -->
             <div class="p-6">
                 <div class="flex gap-4 mb-6 pb-6 border-b border-white/10">
-                    <img src="https://image.tmdb.org/t/p/w500/A4j8S6moJS2zNtRR8oWF08gRnL5.jpg" alt="Five Nights at Freddy's 2" 
+                    <img src="{{ $booking->showtime->movie->poster_url }}" alt="{{ $booking->showtime->movie->title }}" 
                          class="w-24 rounded-lg">
                     <div>
-                        <h2 class="text-xl font-bold text-white">Five Nights at Freddy's 2</h2>
-                        <p class="text-gray-400 mt-1">Regular 2D</p>
-                        <p class="text-gray-400">120 menit</p>
+                        <h2 class="text-xl font-bold text-white">{{ $booking->showtime->movie->title }}</h2>
+                        <p class="text-gray-400 mt-1">{{ $booking->showtime->studio->type_label }}</p>
+                        <p class="text-gray-400">{{ $booking->showtime->movie->duration }} menit</p>
                     </div>
                 </div>
 
@@ -38,19 +40,19 @@
                 <div class="grid grid-cols-2 gap-4 mb-6 pb-6 border-b border-white/10">
                     <div>
                         <p class="text-gray-500 text-sm">Bioskop</p>
-                        <p class="text-white font-medium">TechFlow Cinema Pondok Indah</p>
+                        <p class="text-white font-medium">{{ $booking->showtime->studio->cinema->name }}</p>
                     </div>
                     <div>
                         <p class="text-gray-500 text-sm">Studio</p>
-                        <p class="text-white font-medium">Studio 3</p>
+                        <p class="text-white font-medium">{{ $booking->showtime->studio->name }}</p>
                     </div>
                     <div>
                         <p class="text-gray-500 text-sm">Tanggal</p>
-                        <p class="text-white font-medium">Minggu, 22 Dec 2024</p>
+                        <p class="text-white font-medium">{{ $booking->showtime->show_date->format('l, d M Y') }}</p>
                     </div>
                     <div>
                         <p class="text-gray-500 text-sm">Jam</p>
-                        <p class="text-white font-medium">17:30 WIB</p>
+                        <p class="text-white font-medium">{{ $booking->showtime->formatted_time }} WIB</p>
                     </div>
                 </div>
 
@@ -58,8 +60,11 @@
                 <div class="mb-6 pb-6 border-b border-white/10">
                     <p class="text-gray-500 text-sm mb-2">Kursi</p>
                     <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-[#e50914] text-white font-bold rounded-lg">D5</span>
-                        <span class="px-3 py-1 bg-[#e50914] text-white font-bold rounded-lg">D6</span>
+                        @foreach($booking->seats as $seat)
+                            <span class="px-3 py-1 bg-[#e50914] text-white font-bold rounded-lg">
+                                {{ $seat->seat_code }}
+                            </span>
+                        @endforeach
                     </div>
                 </div>
 
@@ -68,7 +73,7 @@
                     <p class="text-gray-500 text-sm mb-3">Kode Booking</p>
                     <div class="inline-block bg-white p-4 rounded-xl">
                         <p class="text-2xl font-mono font-bold text-black tracking-wider">
-                            TF1ABC2DEF
+                            {{ $booking->booking_code }}
                         </p>
                     </div>
                     <p class="text-gray-500 text-xs mt-3">Tunjukkan kode ini di loket bioskop</p>
@@ -78,21 +83,21 @@
                 <div class="grid grid-cols-2 gap-4 mb-6">
                     <div>
                         <p class="text-gray-500 text-sm">Nama</p>
-                        <p class="text-white font-medium">Demo User</p>
+                        <p class="text-white font-medium">{{ $booking->user->name }}</p>
                     </div>
                     <div>
                         <p class="text-gray-500 text-sm">Email</p>
-                        <p class="text-white font-medium">demo@example.com</p>
+                        <p class="text-white font-medium">{{ $booking->user->email }}</p>
                     </div>
                 </div>
 
                 <!-- Actions -->
                 <div class="flex gap-4">
-                    <a href="#" 
+                    <a href="{{ route('booking.ticket.download', $booking) }}" 
                        class="flex-1 py-3 bg-gradient-to-r from-[#e50914] to-[#b20710] text-white font-semibold rounded-xl text-center hover:opacity-90 transition-opacity">
                         Download PDF
                     </a>
-                    <a href="/my-bookings" 
+                    <a href="{{ route('my-bookings') }}" 
                        class="flex-1 py-3 bg-white/10 text-white font-semibold rounded-xl text-center hover:bg-white/20 transition-colors">
                         Tiket Saya
                     </a>

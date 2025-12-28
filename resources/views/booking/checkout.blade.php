@@ -1,9 +1,26 @@
-<x-layouts.app :title="'Checkout - Avengers: Endgame'">
+<x-layouts.app :title="'Checkout - ' . $booking->showtime->movie->title">
 <div class="py-8">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Rejection Notice -->
+        @if($booking->status === 'rejected' && $booking->admin_notes)
+            <div class="bg-red-500/20 border border-red-500/50 rounded-xl p-4 mb-8">
+                <div class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                    </svg>
+                    <div>
+                        <p class="font-semibold text-red-400">Pembayaran Ditolak</p>
+                        <p class="text-red-300 text-sm mt-1">{{ $booking->admin_notes }}</p>
+                        <p class="text-red-300/70 text-sm mt-2">Silakan upload ulang bukti pembayaran yang valid.</p>
+                    </div>
+                </div>
+            </div>
+        @endif
+
         <!-- Timer Warning -->
+        @if($booking->status === 'pending')
         <div x-data="{ 
-            timeLeft: 900,
+            timeLeft: Math.max(0, Math.floor((new Date('{{ $booking->expires_at->toISOString() }}') - new Date()) / 1000)),
             formatTime(seconds) {
                 const m = Math.floor(seconds / 60);
                 const s = seconds % 60;
@@ -20,6 +37,7 @@
                 <span class="text-xl font-bold text-yellow-500" x-text="formatTime(timeLeft)"></span>
             </div>
         </div>
+        @endif
 
         <div class="grid lg:grid-cols-2 gap-8">
             <!-- Order Summary -->
@@ -28,12 +46,12 @@
 
                 <!-- Movie Info -->
                 <div class="flex gap-4 mb-6 pb-6 border-b border-white/10">
-                    <img src="https://image.tmdb.org/t/p/w500/or06FN3Dka5tuj1aKkPCyhMRYhg.jpg" alt="Avengers: Endgame" 
+                    <img src="{{ $booking->showtime->movie->poster_url }}" alt="{{ $booking->showtime->movie->title }}" 
                          class="w-24 rounded-lg">
                     <div>
-                        <h3 class="font-semibold text-white">Avengers: Endgame</h3>
-                        <p class="text-sm text-gray-400 mt-1">Regular 2D</p>
-                        <p class="text-sm text-gray-400">181 menit</p>
+                        <h3 class="font-semibold text-white">{{ $booking->showtime->movie->title }}</h3>
+                        <p class="text-sm text-gray-400 mt-1">{{ $booking->showtime->studio->type_label }}</p>
+                        <p class="text-sm text-gray-400">{{ $booking->showtime->movie->duration }} menit</p>
                     </div>
                 </div>
 
@@ -41,39 +59,39 @@
                 <div class="space-y-3 mb-6 pb-6 border-b border-white/10">
                     <div class="flex justify-between">
                         <span class="text-gray-400">Kode Booking</span>
-                        <span class="text-white font-mono">BKG-2024122201</span>
+                        <span class="text-white font-mono">{{ $booking->booking_code }}</span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-gray-400">Bioskop</span>
-                        <span class="text-white text-right">CGV Grand Indonesia</span>
+                        <span class="text-white text-right">{{ $booking->showtime->studio->cinema->name }}</span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-gray-400">Studio</span>
-                        <span class="text-white">Studio 5</span>
+                        <span class="text-white">{{ $booking->showtime->studio->name }}</span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-gray-400">Tanggal</span>
-                        <span class="text-white">Minggu, 22 Des 2024</span>
+                        <span class="text-white">{{ $booking->showtime->formatted_date }}</span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-gray-400">Jam</span>
-                        <span class="text-white">14:30</span>
+                        <span class="text-white">{{ $booking->showtime->formatted_time }}</span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-gray-400">Kursi</span>
-                        <span class="text-white">A1, A2, A4</span>
+                        <span class="text-white">{{ $booking->seat_codes }}</span>
                     </div>
                 </div>
 
                 <!-- Price Breakdown -->
                 <div class="space-y-3">
                     <div class="flex justify-between">
-                        <span class="text-gray-400">Harga Tiket (3x)</span>
-                        <span class="text-white">Rp 50.000</span>
+                        <span class="text-gray-400">Harga Tiket ({{ $booking->total_seats }}x)</span>
+                        <span class="text-white">{{ $booking->showtime->formatted_price }}</span>
                     </div>
                     <div class="flex justify-between pt-3 border-t border-white/10">
                         <span class="text-lg font-semibold text-white">Total Pembayaran</span>
-                        <span class="text-lg font-bold text-[#e50914]">Rp 150.000</span>
+                        <span class="text-lg font-bold text-[#e50914]">{{ $booking->formatted_price }}</span>
                     </div>
                 </div>
             </div>
@@ -128,7 +146,7 @@
 
                     <div class="mt-4 p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg">
                         <p class="text-blue-400 text-sm">
-                            <strong>Penting:</strong> Pastikan transfer sesuai nominal Rp 150.000
+                            <strong>Penting:</strong> Pastikan transfer sesuai nominal {{ $booking->formatted_price }}
                         </p>
                     </div>
                 </div>
@@ -137,9 +155,9 @@
                 <div class="bg-[#16162a] rounded-xl p-6 border border-white/10">
                     <h2 class="text-xl font-bold text-white mb-4">Upload Bukti Pembayaran</h2>
 
-                    <form action="#" method="POST" enctype="multipart/form-data" 
+                    <form action="{{ route('booking.pay', $booking) }}" method="POST" enctype="multipart/form-data" 
                           x-data="{ 
-                              method: '',
+                              method: '{{ old('payment_method', $booking->payment_method) }}',
                               preview: null,
                               handleFileSelect(e) {
                                   const file = e.target.files[0];
@@ -148,6 +166,7 @@
                                   }
                               }
                           }">
+                        @csrf
                         
                         <!-- Bank Selection -->
                         <div class="mb-4">
@@ -172,6 +191,9 @@
                                     </div>
                                 </label>
                             </div>
+                            @error('payment_method')
+                                <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <!-- File Upload -->
@@ -196,6 +218,9 @@
                                     </template>
                                 </label>
                             </div>
+                            @error('payment_proof')
+                                <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <!-- Notes -->
@@ -203,7 +228,7 @@
                             <label class="block text-sm text-gray-400 mb-2">Catatan (opsional)</label>
                             <textarea name="payment_notes" rows="2" 
                                       class="w-full px-4 py-2 bg-[#0f0f1a] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:border-[#e50914] focus:outline-none"
-                                      placeholder="Contoh: Transfer dari rekening a.n. Budi"></textarea>
+                                      placeholder="Contoh: Transfer dari rekening a.n. Budi">{{ old('payment_notes') }}</textarea>
                         </div>
 
                         <button type="submit" :disabled="!method"
@@ -213,7 +238,10 @@
                     </form>
 
                     <!-- Cancel -->
-                    <button type="button" onclick="alert('Pesanan dibatalkan (dummy)')"
+                    <form id="cancel-checkout-{{ $booking->id }}" action="{{ route('booking.cancel', $booking) }}" method="POST" class="hidden">
+                        @csrf
+                    </form>
+                    <button type="button" onclick="confirmModal('cancel-checkout-{{ $booking->id }}')"
                             class="w-full py-3 text-gray-400 hover:text-red-400 transition-colors text-sm mt-4">
                         Batalkan Pesanan
                     </button>
