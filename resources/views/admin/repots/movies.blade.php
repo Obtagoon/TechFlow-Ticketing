@@ -4,15 +4,16 @@
     <div class="flex justify-between items-center">
         <div>
             <h2 class="text-xl font-semibold text-white">Laporan Performa Film</h2>
-            <p class="text-gray-400 text-sm">Periode: 22 Nov 2024 - 22 Des 2024</p>
+            <p class="text-gray-400 text-sm">Periode: {{ $startDate->format('d M Y') }} - {{ $endDate->format('d M Y') }}</p>
         </div>
         <div class="flex gap-2">
-            <a href="/admin/reports" class="px-4 py-2 bg-gray-600 text-white font-medium rounded-lg hover:opacity-90">
+            <a href="{{ route('admin.reports.index') }}" class="px-4 py-2 bg-gray-600 text-white font-medium rounded-lg hover:opacity-90">
                 Kembali
             </a>
-            <button type="button" class="px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:opacity-90">
+            <a href="{{ route('admin.reports.movies', ['start_date' => $startDate->format('Y-m-d'), 'end_date' => $endDate->format('Y-m-d'), 'download' => 1]) }}" 
+               class="px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:opacity-90">
                 Download PDF
-            </button>
+            </a>
         </div>
     </div>
 
@@ -31,66 +32,28 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @forelse ($movies as $index => $movie)
                     <tr class="border-b border-white/5">
-                        <td class="py-3 text-gray-400">1</td>
+                        <td class="py-3 text-gray-400">{{ $index + 1 }}</td>
                         <td class="py-3">
                             <div class="flex items-center gap-3">
-                                <img src="https://image.tmdb.org/t/p/w92/or06FN3Dka5tuj1yVnS3m7PBNKy.jpg" alt="Avengers" class="w-10 h-14 object-cover rounded">
-                                <span class="text-white font-medium">Avengers: Endgame</span>
+                                @if($movie->poster)
+                                <img src="{{ $movie->poster_url }}" alt="{{ $movie->title }}" class="w-10 h-14 object-cover rounded">
+                                @endif
+                                <span class="text-white font-medium">{{ $movie->title }}</span>
                             </div>
                         </td>
-                        <td class="py-3 text-gray-400">Action, Adventure</td>
-                        <td class="py-3 text-gray-400 text-center">24</td>
-                        <td class="py-3 text-green-500 text-right font-medium">Rp 12.500.000</td>
-                    </tr>
-                    <tr class="border-b border-white/5">
-                        <td class="py-3 text-gray-400">2</td>
-                        <td class="py-3">
-                            <div class="flex items-center gap-3">
-                                <img src="https://image.tmdb.org/t/p/w92/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg" alt="Spider-Man" class="w-10 h-14 object-cover rounded">
-                                <span class="text-white font-medium">Spider-Man: No Way Home</span>
-                            </div>
+                        <td class="py-3 text-gray-400">{{ $movie->genre ?? '-' }}</td>
+                        <td class="py-3 text-gray-400 text-center">{{ $movie->total_showtimes }}</td>
+                        <td class="py-3 text-green-500 text-right font-medium">
+                            Rp {{ number_format($movie->total_revenue ?? 0, 0, ',', '.') }}
                         </td>
-                        <td class="py-3 text-gray-400">Action, Adventure</td>
-                        <td class="py-3 text-gray-400 text-center">20</td>
-                        <td class="py-3 text-green-500 text-right font-medium">Rp 10.200.000</td>
                     </tr>
-                    <tr class="border-b border-white/5">
-                        <td class="py-3 text-gray-400">3</td>
-                        <td class="py-3">
-                            <div class="flex items-center gap-3">
-                                <img src="https://image.tmdb.org/t/p/w92/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg" alt="Dune" class="w-10 h-14 object-cover rounded">
-                                <span class="text-white font-medium">Dune: Part Two</span>
-                            </div>
-                        </td>
-                        <td class="py-3 text-gray-400">Sci-Fi, Adventure</td>
-                        <td class="py-3 text-gray-400 text-center">18</td>
-                        <td class="py-3 text-green-500 text-right font-medium">Rp 13.500.000</td>
+                    @empty
+                    <tr>
+                        <td colspan="5" class="py-4 text-center text-gray-400">Tidak ada data film</td>
                     </tr>
-                    <tr class="border-b border-white/5">
-                        <td class="py-3 text-gray-400">4</td>
-                        <td class="py-3">
-                            <div class="flex items-center gap-3">
-                                <img src="https://image.tmdb.org/t/p/w92/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg" alt="Oppenheimer" class="w-10 h-14 object-cover rounded">
-                                <span class="text-white font-medium">Oppenheimer</span>
-                            </div>
-                        </td>
-                        <td class="py-3 text-gray-400">Drama, History</td>
-                        <td class="py-3 text-gray-400 text-center">15</td>
-                        <td class="py-3 text-green-500 text-right font-medium">Rp 15.000.000</td>
-                    </tr>
-                    <tr class="border-b border-white/5">
-                        <td class="py-3 text-gray-400">5</td>
-                        <td class="py-3">
-                            <div class="flex items-center gap-3">
-                                <img src="https://image.tmdb.org/t/p/w92/pFlaoHTZeyNkG83vxsAJiGzfSsa.jpg" alt="The Batman" class="w-10 h-14 object-cover rounded">
-                                <span class="text-white font-medium">The Batman</span>
-                            </div>
-                        </td>
-                        <td class="py-3 text-gray-400">Action, Crime</td>
-                        <td class="py-3 text-gray-400 text-center">12</td>
-                        <td class="py-3 text-green-500 text-right font-medium">Rp 6.000.000</td>
-                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
