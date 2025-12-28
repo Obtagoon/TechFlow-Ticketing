@@ -5,8 +5,8 @@
         <div class="flex items-center justify-between">
             <div>
                 <p class="text-gray-400 text-sm">Total Film</p>
-                <p class="text-3xl font-bold text-white mt-1">42</p>
-                <p class="text-sm text-gray-500 mt-1">8 sedang tayang</p>
+                <p class="text-3xl font-bold text-white mt-1">{{ $stats['total_movies'] }}</p>
+                <p class="text-sm text-gray-500 mt-1">{{ $stats['now_playing'] }} sedang tayang</p>
             </div>
             <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center">
                 <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -20,8 +20,8 @@
         <div class="flex items-center justify-between">
             <div>
                 <p class="text-gray-400 text-sm">Total Pemesanan</p>
-                <p class="text-3xl font-bold text-white mt-1">1,234</p>
-                <p class="text-sm text-gray-500 mt-1">28 hari ini</p>
+                <p class="text-3xl font-bold text-white mt-1">{{ $stats['total_bookings'] }}</p>
+                <p class="text-sm text-gray-500 mt-1">{{ $stats['today_bookings'] }} hari ini</p>
             </div>
             <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center">
                 <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -35,8 +35,8 @@
         <div class="flex items-center justify-between">
             <div>
                 <p class="text-gray-400 text-sm">Total Pendapatan</p>
-                <p class="text-2xl font-bold text-white mt-1">Rp 125.500.000</p>
-                <p class="text-sm text-green-400 mt-1">+Rp 2.350.000 hari ini</p>
+                <p class="text-2xl font-bold text-white mt-1">Rp {{ number_format($stats['total_revenue'], 0, ',', '.') }}</p>
+                <p class="text-sm text-green-400 mt-1">+Rp {{ number_format($stats['today_revenue'], 0, ',', '.') }} hari ini</p>
             </div>
             <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
                 <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -50,8 +50,8 @@
         <div class="flex items-center justify-between">
             <div>
                 <p class="text-gray-400 text-sm">Total User</p>
-                <p class="text-3xl font-bold text-white mt-1">856</p>
-                <p class="text-sm text-gray-500 mt-1">5 bioskop</p>
+                <p class="text-3xl font-bold text-white mt-1">{{ $stats['total_users'] }}</p>
+                <p class="text-sm text-gray-500 mt-1">{{ $stats['total_cinemas'] }} bioskop</p>
             </div>
             <div class="w-12 h-12 bg-yellow-500/20 rounded-xl flex items-center justify-center">
                 <svg class="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -68,7 +68,7 @@
         <div class="p-6 border-b border-white/10">
             <div class="flex items-center justify-between">
                 <h2 class="text-lg font-semibold text-white">Pemesanan Terbaru</h2>
-                <a href="#" class="text-sm text-[#e50914] hover:underline">Lihat Semua</a>
+                <a href="{{ route('admin.bookings.index') }}" class="text-sm text-[#e50914] hover:underline">Lihat Semua</a>
             </div>
         </div>
         <div class="overflow-x-auto">
@@ -83,51 +83,29 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-white/5">
-                    <tr class="hover:bg-white/5">
-                        <td class="px-6 py-4 font-mono text-sm text-white">BK20231222001</td>
-                        <td class="px-6 py-4 text-gray-300">John Doe</td>
-                        <td class="px-6 py-4 text-gray-300">Avengers: Endgame</td>
-                        <td class="px-6 py-4 text-white">Rp 150.000</td>
-                        <td class="px-6 py-4">
-                            <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400">Confirmed</span>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-white/5">
-                        <td class="px-6 py-4 font-mono text-sm text-white">BK20231222002</td>
-                        <td class="px-6 py-4 text-gray-300">Jane Smith</td>
-                        <td class="px-6 py-4 text-gray-300">Spider-Man: No Way...</td>
-                        <td class="px-6 py-4 text-white">Rp 225.000</td>
-                        <td class="px-6 py-4">
-                            <span class="px-2 py-1 rounded-full text-xs font-medium bg-yellow-500/20 text-yellow-400">Pending</span>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-white/5">
-                        <td class="px-6 py-4 font-mono text-sm text-white">BK20231222003</td>
-                        <td class="px-6 py-4 text-gray-300">Ahmad Wisnu</td>
-                        <td class="px-6 py-4 text-gray-300">The Batman</td>
-                        <td class="px-6 py-4 text-white">Rp 100.000</td>
-                        <td class="px-6 py-4">
-                            <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400">Confirmed</span>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-white/5">
-                        <td class="px-6 py-4 font-mono text-sm text-white">BK20231222004</td>
-                        <td class="px-6 py-4 text-gray-300">Siti Rahma</td>
-                        <td class="px-6 py-4 text-gray-300">Black Panther: Wak...</td>
-                        <td class="px-6 py-4 text-white">Rp 175.000</td>
-                        <td class="px-6 py-4">
-                            <span class="px-2 py-1 rounded-full text-xs font-medium bg-red-500/20 text-red-400">Cancelled</span>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-white/5">
-                        <td class="px-6 py-4 font-mono text-sm text-white">BK20231222005</td>
-                        <td class="px-6 py-4 text-gray-300">Budi Santoso</td>
-                        <td class="px-6 py-4 text-gray-300">Guardians of the G...</td>
-                        <td class="px-6 py-4 text-white">Rp 300.000</td>
-                        <td class="px-6 py-4">
-                            <span class="px-2 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400">Confirmed</span>
-                        </td>
-                    </tr>
+                    @forelse($recentBookings as $booking)
+                        <tr class="hover:bg-white/5">
+                            <td class="px-6 py-4 font-mono text-sm text-white">{{ $booking->booking_code }}</td>
+                            <td class="px-6 py-4 text-gray-300">{{ $booking->user->name }}</td>
+                            <td class="px-6 py-4 text-gray-300">{{ Str::limit($booking->showtime->movie->title, 20) }}</td>
+                            <td class="px-6 py-4 text-white">{{ $booking->formatted_price }}</td>
+                            <td class="px-6 py-4">
+                                @php $status = $booking->status_label; @endphp
+                                <span class="px-2 py-1 rounded-full text-xs font-medium
+                                    @if($status['color'] === 'green') bg-green-500/20 text-green-400
+                                    @elseif($status['color'] === 'yellow') bg-yellow-500/20 text-yellow-400
+                                    @elseif($status['color'] === 'red') bg-red-500/20 text-red-400
+                                    @else bg-gray-500/20 text-gray-400
+                                    @endif">
+                                    {{ $status['label'] }}
+                                </span>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="px-6 py-8 text-center text-gray-500">Belum ada pemesanan</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
@@ -139,82 +117,51 @@
             <h2 class="text-lg font-semibold text-white">Film Populer Minggu Ini</h2>
         </div>
         <div class="p-6 space-y-4">
-            <div class="flex items-center gap-4">
-                <span class="w-6 h-6 flex items-center justify-center rounded-full bg-[#e50914] text-white text-sm font-bold">1</span>
-                <img src="https://image.tmdb.org/t/p/w92/or06FN3Dka5tuj6HVohdJyH8JYM.jpg" alt="" class="w-12 h-16 object-cover rounded">
-                <div class="flex-1 min-w-0">
-                    <p class="text-white font-medium truncate">Avengers: Endgame</p>
-                    <p class="text-sm text-gray-400">156 pemesanan</p>
+            @forelse($popularMovies as $index => $movie)
+                <div class="flex items-center gap-4">
+                    <span class="w-6 h-6 flex items-center justify-center rounded-full 
+                        {{ $index < 3 ? 'bg-[#e50914] text-white' : 'bg-white/10 text-gray-400' }} 
+                        text-sm font-bold">
+                        {{ $index + 1 }}
+                    </span>
+                    <img src="{{ $movie->poster_url }}" alt="" class="w-12 h-16 object-cover rounded">
+                    <div class="flex-1 min-w-0">
+                        <p class="text-white font-medium truncate">{{ $movie->title }}</p>
+                        <p class="text-sm text-gray-400">{{ $movie->showtimes_count ?? 0 }} pemesanan</p>
+                    </div>
                 </div>
-            </div>
-            <div class="flex items-center gap-4">
-                <span class="w-6 h-6 flex items-center justify-center rounded-full bg-[#e50914] text-white text-sm font-bold">2</span>
-                <img src="https://image.tmdb.org/t/p/w92/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg" alt="" class="w-12 h-16 object-cover rounded">
-                <div class="flex-1 min-w-0">
-                    <p class="text-white font-medium truncate">Spider-Man: No Way Home</p>
-                    <p class="text-sm text-gray-400">143 pemesanan</p>
-                </div>
-            </div>
-            <div class="flex items-center gap-4">
-                <span class="w-6 h-6 flex items-center justify-center rounded-full bg-[#e50914] text-white text-sm font-bold">3</span>
-                <img src="https://image.tmdb.org/t/p/w92/74xTEgt7R36Fvdl8O2Q1kXh1kkl.jpg" alt="" class="w-12 h-16 object-cover rounded">
-                <div class="flex-1 min-w-0">
-                    <p class="text-white font-medium truncate">The Batman</p>
-                    <p class="text-sm text-gray-400">128 pemesanan</p>
-                </div>
-            </div>
-            <div class="flex items-center gap-4">
-                <span class="w-6 h-6 flex items-center justify-center rounded-full bg-white/10 text-gray-400 text-sm font-bold">4</span>
-                <img src="https://image.tmdb.org/t/p/w92/sv1xJUazXeYqALKwvdM22HaZl2c.jpg" alt="" class="w-12 h-16 object-cover rounded">
-                <div class="flex-1 min-w-0">
-                    <p class="text-white font-medium truncate">Black Panther: Wakanda Forever</p>
-                    <p class="text-sm text-gray-400">97 pemesanan</p>
-                </div>
-            </div>
-            <div class="flex items-center gap-4">
-                <span class="w-6 h-6 flex items-center justify-center rounded-full bg-white/10 text-gray-400 text-sm font-bold">5</span>
-                <img src="https://image.tmdb.org/t/p/w92/r2J02Z2OpNTctfOSN1Ydgii51I3.jpg" alt="" class="w-12 h-16 object-cover rounded">
-                <div class="flex-1 min-w-0">
-                    <p class="text-white font-medium truncate">Guardians of the Galaxy Vol. 3</p>
-                    <p class="text-sm text-gray-400">85 pemesanan</p>
-                </div>
-            </div>
+            @empty
+                <p class="text-gray-500 text-center py-4">Belum ada data</p>
+            @endforelse
         </div>
     </div>
 </div>
 
-<!-- Revenue Chart -->
+<!-- Revenue Chart Placeholder -->
 <div class="mt-8 bg-[#16162a] rounded-xl border border-white/10 p-6">
     <h2 class="text-lg font-semibold text-white mb-6">Pendapatan 7 Hari Terakhir</h2>
-    <div class="h-64 flex items-end justify-between gap-4">
-        <div class="flex-1 flex flex-col items-center gap-2">
-            <div class="w-full bg-gradient-to-t from-[#e50914] to-[#e50914]/50 rounded-t-lg transition-all hover:opacity-80" style="height: 45%;" title="Rp 15.500.000"></div>
-            <span class="text-xs text-gray-400">Sen</span>
-        </div>
-        <div class="flex-1 flex flex-col items-center gap-2">
-            <div class="w-full bg-gradient-to-t from-[#e50914] to-[#e50914]/50 rounded-t-lg transition-all hover:opacity-80" style="height: 65%;" title="Rp 22.300.000"></div>
-            <span class="text-xs text-gray-400">Sel</span>
-        </div>
-        <div class="flex-1 flex flex-col items-center gap-2">
-            <div class="w-full bg-gradient-to-t from-[#e50914] to-[#e50914]/50 rounded-t-lg transition-all hover:opacity-80" style="height: 35%;" title="Rp 12.100.000"></div>
-            <span class="text-xs text-gray-400">Rab</span>
-        </div>
-        <div class="flex-1 flex flex-col items-center gap-2">
-            <div class="w-full bg-gradient-to-t from-[#e50914] to-[#e50914]/50 rounded-t-lg transition-all hover:opacity-80" style="height: 80%;" title="Rp 27.500.000"></div>
-            <span class="text-xs text-gray-400">Kam</span>
-        </div>
-        <div class="flex-1 flex flex-col items-center gap-2">
-            <div class="w-full bg-gradient-to-t from-[#e50914] to-[#e50914]/50 rounded-t-lg transition-all hover:opacity-80" style="height: 100%;" title="Rp 34.250.000"></div>
-            <span class="text-xs text-gray-400">Jum</span>
-        </div>
-        <div class="flex-1 flex flex-col items-center gap-2">
-            <div class="w-full bg-gradient-to-t from-[#e50914] to-[#e50914]/50 rounded-t-lg transition-all hover:opacity-80" style="height: 90%;" title="Rp 31.000.000"></div>
-            <span class="text-xs text-gray-400">Sab</span>
-        </div>
-        <div class="flex-1 flex flex-col items-center gap-2">
-            <div class="w-full bg-gradient-to-t from-[#e50914] to-[#e50914]/50 rounded-t-lg transition-all hover:opacity-80" style="height: 55%;" title="Rp 18.850.000"></div>
-            <span class="text-xs text-gray-400">Min</span>
-        </div>
+    @php
+        $maxRevenue = collect($revenueData)->max('revenue') ?: 1;
+    @endphp
+    <div class="h-64 flex items-end justify-between gap-4 pb-8">
+        @foreach($revenueData as $data)
+            @php
+                $height = $maxRevenue > 0 ? ($data['revenue'] / $maxRevenue) * 100 : 0;
+                $hasRevenue = $data['revenue'] > 0;
+            @endphp
+            <div class="flex-1 flex flex-col items-center gap-2">
+                @if($hasRevenue)
+                    <span class="text-xs text-green-400 font-medium">
+                        Rp {{ number_format($data['revenue'] / 1000, 0, ',', '.') }}K
+                    </span>
+                @endif
+                <div class="w-full bg-gradient-to-t from-[#e50914] to-[#e50914]/50 rounded-t-lg transition-all hover:opacity-80 {{ $hasRevenue ? 'min-h-[20px]' : 'min-h-[4px] opacity-30' }}"
+                     style="height: {{ $hasRevenue ? max($height, 10) : 2 }}%"
+                     title="Rp {{ number_format($data['revenue'], 0, ',', '.') }}">
+                </div>
+                <span class="text-xs text-gray-400">{{ $data['date'] }}</span>
+            </div>
+        @endforeach
     </div>
 </div>
 </x-layouts.admin>
