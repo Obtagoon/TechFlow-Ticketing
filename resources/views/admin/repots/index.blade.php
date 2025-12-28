@@ -5,24 +5,24 @@
         <h2 class="text-lg font-semibold text-white mb-4">Laporan Penjualan</h2>
         <p class="text-gray-400 text-sm mb-6">Generate laporan penjualan tiket berdasarkan rentang tanggal</p>
         
-        <form action="/admin/reports/sales" method="GET" class="space-y-4">
+        <form action="{{ route('admin.reports.sales') }}" method="GET" class="space-y-4">
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm text-gray-400 mb-2">Tanggal Mulai</label>
-                    <input type="date" name="start_date" required value="2024-12-15"
+                    <input type="date" name="start_date" required value="{{ now()->subDays(7)->format('Y-m-d') }}"
                            class="w-full px-4 py-2 bg-[#0f0f1a] border border-white/10 rounded-lg text-white">
                 </div>
                 <div>
                     <label class="block text-sm text-gray-400 mb-2">Tanggal Akhir</label>
-                    <input type="date" name="end_date" required value="2024-12-22"
+                    <input type="date" name="end_date" required value="{{ now()->format('Y-m-d') }}"
                            class="w-full px-4 py-2 bg-[#0f0f1a] border border-white/10 rounded-lg text-white">
                 </div>
             </div>
             <div class="flex gap-2">
-                <a href="/admin/reports/sales" class="px-4 py-2 bg-[#e50914] text-white font-medium rounded-lg hover:opacity-90">
+                <button type="submit" class="px-4 py-2 bg-[#e50914] text-white font-medium rounded-lg hover:opacity-90">
                     Lihat Laporan
-                </a>
-                <button type="button" class="px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:opacity-90">
+                </button>
+                <button type="submit" name="download" value="1" class="px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:opacity-90">
                     Download PDF
                 </button>
             </div>
@@ -34,28 +34,28 @@
         <h2 class="text-lg font-semibold text-white mb-4">Laporan Performa Film</h2>
         <p class="text-gray-400 text-sm mb-6">Generate laporan performa film berdasarkan penjualan tiket</p>
         
-        <form action="/admin/reports/movies" method="GET" class="space-y-4">
+        <form action="{{ route('admin.reports.movies') }}" method="GET" class="space-y-4">
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm text-gray-400 mb-2">Tanggal Mulai</label>
-                    <input type="date" name="start_date" required value="2024-11-22"
+                    <input type="date" name="start_date" required value="{{ now()->subMonth()->format('Y-m-d') }}"
                            class="w-full px-4 py-2 bg-[#0f0f1a] border border-white/10 rounded-lg text-white">
                 </div>
                 <div>
                     <label class="block text-sm text-gray-400 mb-2">Tanggal Akhir</label>
-                    <input type="date" name="end_date" required value="2024-12-22"
+                    <input type="date" name="end_date" required value="{{ now()->format('Y-m-d') }}"
                            class="w-full px-4 py-2 bg-[#0f0f1a] border border-white/10 rounded-lg text-white">
                 </div>
             </div>
             <div class="flex gap-2">
-                <a href="/admin/reports/movies" class="px-4 py-2 bg-[#e50914] text-white font-medium rounded-lg hover:opacity-90">
+                <button type="submit" class="px-4 py-2 bg-[#e50914] text-white font-medium rounded-lg hover:opacity-90">
                     Lihat Laporan
-                </a>
-                <button type="button" class="px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:opacity-90">
+                </button>
+                <button type="submit" name="download" value="1" class="px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:opacity-90">
                     Download PDF
                 </button>
             </div>
         </form>
     </div>
 </div>
-</x-layouts.admin
+</x-layouts.admin>
