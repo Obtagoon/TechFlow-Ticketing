@@ -13,6 +13,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- Ikon Logo -->
+    <link rel="icon" href="{{ asset('images/logo-techflow.png') }}">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
@@ -25,10 +28,8 @@
             <!-- Logo -->
             <div class="h-16 flex items-center justify-center border-b border-white/10">
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2">
-                    <div class="w-8 h-8 bg-gradient-to-br from-[#e50914] to-[#b20710] rounded-lg flex items-center justify-center">
-                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"/>
-                        </svg>
+                    <div class="rounded-lg flex items-center justify-center">
+                       <img src="{{ asset('images/logo-techflow.png') }}" alt="Logo" class="w-8 h-8">
                     </div>
                     <span class="font-bold text-white">Admin Panel</span>
                 </a>
