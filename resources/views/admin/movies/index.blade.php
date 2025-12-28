@@ -1,5 +1,5 @@
 <x-layouts.admin title="Kelola Film">
-<!-- Bagian Header -->
+<!-- Header -->
 <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
     <div class="flex items-center gap-4">
         <a href="{{ route('admin.movies.create') }}" class="px-4 py-2 bg-gradient-to-r from-[#e50914] to-[#b20710] text-white font-medium rounded-lg hover:opacity-90 transition-opacity">
@@ -12,7 +12,7 @@
     </div>
 </div>
 
-<!-- Filter -->
+<!-- Filters -->
 <div class="bg-[#16162a] rounded-xl p-4 mb-6 border border-white/10">
     <form method="GET" class="flex flex-wrap items-center gap-4" id="filter-form">
         <div class="flex-1 min-w-[200px]">
@@ -35,14 +35,14 @@
     </form>
 </div>
 
-<!-- Tabel -->
+<!-- Table -->
 <div class="bg-[#16162a] rounded-xl border border-white/10 overflow-hidden">
     <div class="overflow-x-auto" id="movies-table">
         @include('admin.movies.partials.table')
     </div>
 </div>
 
-<!-- Modal Import TMDB -->
+<!-- TMDB Import Modal -->
 <div id="tmdb-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/50 backdrop-blur-sm">
     <div class="bg-[#16162a] rounded-xl w-full max-w-2xl mx-4 border border-white/10">
         <div class="p-6 border-b border-white/10 flex items-center justify-between">
@@ -68,7 +68,7 @@
 
 @push('scripts')
 <script>
-// Pencarian langsung
+// Live search
 let searchTimeout;
 document.getElementById('live-search').addEventListener('input', function() {
     clearTimeout(searchTimeout);
@@ -83,7 +83,7 @@ document.getElementById('live-search').addEventListener('input', function() {
     }, 300);
 });
 
-// Pencarian TMDB
+// TMDB Search
 let tmdbTimeout;
 document.getElementById('tmdb-search').addEventListener('input', function() {
     clearTimeout(tmdbTimeout);
