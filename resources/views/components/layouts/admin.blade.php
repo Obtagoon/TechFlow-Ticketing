@@ -21,10 +21,21 @@
 </head>
 <body class="bg-[#0f0f1a] text-white antialiased" x-data="{ sidebarOpen: false }">
     <div class="flex min-h-screen">
+        
+         <!-- Mobile Overlay -->
+        <div x-show="sidebarOpen" 
+             x-transition:enter="transition-opacity ease-out duration-300"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="transition-opacity ease-in duration-200"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0"
+             @click="sidebarOpen = false"
+             class="fixed inset-0 bg-black/50 z-40 lg:hidden"></div>
+
         <!-- Sidebar -->
-        <aside class="fixed inset-y-0 left-0 z-50 w-64 bg-[#0a0a12] border-r border-white/10 transform transition-transform lg:translate-x-0"
-               :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
-               @click.away="sidebarOpen = false">
+        <aside class="fixed inset-y-0 left-0 z-50 w-64 bg-[#0a0a12] border-r border-white/10 transform transition-transform duration-300 lg:translate-x-0"
+               :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'">>
             <!-- Logo -->
             <div class="h-16 flex items-center justify-center border-b border-white/10">
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2">
@@ -168,7 +179,7 @@
     <!-- Global Confirm Modal -->
     <x-confirm-modal title="Konfirmasi Hapus" message="Data yang dihapus tidak dapat dikembalikan. Yakin ingin melanjutkan?" confirmText="Ya, Hapus" />
 
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
     @stack('scripts')
 </body>
 </html>
