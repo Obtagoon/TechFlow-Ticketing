@@ -35,7 +35,7 @@
 
         <!-- Sidebar -->
         <aside class="fixed inset-y-0 left-0 z-50 w-64 bg-[#0a0a12] border-r border-white/10 transform transition-transform duration-300 lg:translate-x-0"
-               :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'">>
+               :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'">
             <!-- Logo -->
             <div class="h-16 flex items-center justify-center border-b border-white/10">
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2">
