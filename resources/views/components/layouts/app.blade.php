@@ -14,6 +14,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
+    <!-- Ikon Logo -->
+    <link rel="icon" href="{{ asset('images/logo-techflow.png') }}">
+    
     <!-- Vite Assets -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
@@ -27,11 +30,7 @@
             <div class="flex items-center justify-between h-16">
                 <!-- Logo -->
                 <a href="{{ route('home') }}" class="flex items-center gap-2">
-                    <div class="w-10 h-10 bg-gradient-to-br from-[#e50914] to-[#b20710] rounded-lg flex items-center justify-center">
-                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"/>
-                        </svg>
-                    </div>
+                    <img src="{{ asset('images/logo-techflow.png') }}" alt="Logo" class="w-8 h-8">
                     <span class="text-xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
                         TechFlow Ticketing
                     </span>
@@ -126,11 +125,7 @@
                 <!-- Brand -->
                 <div class="col-span-1 md:col-span-2">
                     <a href="{{ route('home') }}" class="flex items-center gap-2 mb-4">
-                        <div class="w-10 h-10 bg-gradient-to-br from-[#e50914] to-[#b20710] rounded-lg flex items-center justify-center">
-                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"/>
-                            </svg>
-                        </div>
+                        <img src="{{ asset('images/logo-techflow.png') }}" alt="Logo" class="w-8 h-8">
                         <span class="text-xl font-bold">TechFlow Ticketing</span>
                     </a>
                     <p class="text-gray-400 text-sm max-w-md">
