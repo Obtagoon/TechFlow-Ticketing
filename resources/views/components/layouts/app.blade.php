@@ -139,8 +139,7 @@
                     <ul class="space-y-2 text-sm text-gray-400">
                         <li><a href="{{ route('home') }}" class="hover:text-white transition-colors">Beranda</a></li>
                         <li><a href="{{ route('movies.index') }}" class="hover:text-white transition-colors">Film</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Promo</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Bantuan</a></li>
+                        <li><a href="{{ route('help') }}" class="hover:text-white transition-colors">Bantuan</a></li>
                     </ul>
                 </div>
 

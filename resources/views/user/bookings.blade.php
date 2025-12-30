@@ -82,7 +82,7 @@
                                         <form id="cancel-booking-{{ $booking->id }}" action="{{ route('booking.cancel', $booking) }}" method="POST" class="hidden">
                                             @csrf
                                         </form>
-                                        <button type="button" @click="confirmModal('cancel-booking-{{ $booking->id }}')"
+                                        <button type="button" onclick="confirmModal('cancel-booking-{{ $booking->id }}')"
                                                 class="px-4 py-2 text-red-400 text-sm font-medium hover:text-red-300 transition-colors">
                                             Batalkan
                                         </button>

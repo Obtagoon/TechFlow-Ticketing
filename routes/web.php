@@ -23,6 +23,11 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/movies', [HomeController::class, 'movies'])->name('movies.index');
 Route::get('/movies/{movie}', [HomeController::class, 'showMovie'])->name('movies.show');
 
+// Help Page
+Route::get('/help', function () {
+    return view('help');
+})->name('help');
+
 // Authentication
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
