@@ -73,7 +73,6 @@
             </div>
 
             <div class="booking-code">
-                <div class="qr-placeholder">QR</div>
                 <div class="booking-code-label">KODE BOOKING</div>
                 <div class="booking-code-value">{{ $booking->booking_code }}</div>
             </div>
