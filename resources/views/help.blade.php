@@ -297,7 +297,7 @@
                 <p class="text-gray-400">Hubungi tim support kami yang siap membantu</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <!-- Email -->
                 <a href="mailto:info@techflowticketing.com" class="group relative bg-gradient-to-br from-[#1e1e35] to-[#16162a] rounded-2xl border border-white/10 p-6 text-center overflow-hidden hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-1">
                     <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -312,22 +312,8 @@
                     </div>
                 </a>
 
-                <!-- Phone -->
-                <a href="tel:0211234567" class="group relative bg-gradient-to-br from-[#1e1e35] to-[#16162a] rounded-2xl border border-white/10 p-6 text-center overflow-hidden hover:border-[#e50914]/50 transition-all duration-300 hover:-translate-y-1">
-                    <div class="absolute inset-0 bg-gradient-to-br from-[#e50914]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="relative">
-                        <div class="w-14 h-14 bg-gradient-to-br from-[#e50914]/20 to-[#b20710]/20 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                            <svg class="w-7 h-7 text-[#e50914]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                            </svg>
-                        </div>
-                        <h3 class="font-semibold mb-1">Telepon</h3>
-                        <p class="text-gray-400 text-sm">021-1234567</p>
-                    </div>
-                </a>
-
                 <!-- WhatsApp -->
-                <a href="https://wa.me/6281234567890" target="_blank" class="group relative bg-gradient-to-br from-[#1e1e35] to-[#16162a] rounded-2xl border border-white/10 p-6 text-center overflow-hidden hover:border-[#25D366]/50 transition-all duration-300 hover:-translate-y-1">
+                <a href="https://wa.me/6281953156184" target="_blank" class="group relative bg-gradient-to-br from-[#1e1e35] to-[#16162a] rounded-2xl border border-white/10 p-6 text-center overflow-hidden hover:border-[#25D366]/50 transition-all duration-300 hover:-translate-y-1">
                     <div class="absolute inset-0 bg-gradient-to-br from-[#25D366]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="relative">
                         <div class="w-14 h-14 bg-gradient-to-br from-[#25D366]/20 to-[#128C7E]/20 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">

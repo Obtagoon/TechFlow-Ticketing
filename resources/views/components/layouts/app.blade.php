@@ -148,8 +148,7 @@
                     <h4 class="font-semibold mb-4">Kontak</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
                         <li>Email: info@techflowticketing.com</li>
-                        <li>Telepon: 021-1234567</li>
-                        <li>WhatsApp: 0812-3456-7890</li>
+                        <li>WhatsApp: 0819-5315-6184</li>
                     </ul>
                 </div>
             </div>
