@@ -14,9 +14,9 @@
         <!-- Ticket Card -->
         <div class="bg-[#16162a] rounded-2xl overflow-hidden border border-white/10 shadow-xl">
             <!-- Header -->
-            <div class="bg-gradient-to-r from-[#e50914] to-[#b20710] p-6 text-center">
+            <div class="bg-gradient-to-r from-[#6e080d] to-[#90141a] p-6 text-center">
                 <div class="flex items-center justify-center gap-2 mb-2">
-                    <img src="{{ asset('images/logo-techflow.png') }}" alt="Logo" class="w-8 h-8">
+                    <img src="{{ asset('images/logo-techflow.png') }}" alt="Logo" class="w-10 h-10">
                     <span class="text-xl font-bold text-white">TechFlow Ticketing</span>
                 </div>
                 <p class="text-white/80 text-sm">E-TICKET</p>
