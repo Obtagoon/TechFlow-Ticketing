@@ -14,19 +14,19 @@
 
 <!-- Filters -->
 <div class="bg-[#16162a] rounded-xl p-4 mb-6 border border-white/10">
-    <form method="GET" class="flex flex-wrap items-center gap-4" id="filter-form">
-        <div class="flex-1 min-w-[200px]">
+    <form method="GET" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3" id="filter-form">
+        <div class="sm:col-span-2 lg:col-span-1">
             <input type="text" name="search" value="{{ request('search') }}" id="live-search"
-                   class="w-full px-4 py-2 bg-[#0f0f1a] border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#e50914]"
+                   class="w-full px-4 py-2 bg-[#0f0f1a] border border-white/10 rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#e50914]"
                    placeholder="Cari film...">
         </div>
-        <select name="status" onchange="this.form.submit()" class="px-4 py-2 bg-[#0f0f1a] border border-white/10 rounded-lg text-white">
+        <select name="status" onchange="this.form.submit()" class="w-full px-4 py-2 bg-[#0f0f1a] border border-white/10 rounded-lg text-white text-sm">
             <option value="">Semua Status</option>
             <option value="now_playing" {{ request('status') === 'now_playing' ? 'selected' : '' }}>Sedang Tayang</option>
             <option value="coming_soon" {{ request('status') === 'coming_soon' ? 'selected' : '' }}>Segera Tayang</option>
             <option value="ended" {{ request('status') === 'ended' ? 'selected' : '' }}>Selesai</option>
         </select>
-        <select name="genre" onchange="this.form.submit()" class="px-4 py-2 bg-[#0f0f1a] border border-white/10 rounded-lg text-white">
+        <select name="genre" onchange="this.form.submit()" class="w-full px-4 py-2 bg-[#0f0f1a] border border-white/10 rounded-lg text-white text-sm">
             <option value="">Semua Genre</option>
             @foreach($genres as $genre)
                 <option value="{{ $genre }}" {{ request('genre') === $genre ? 'selected' : '' }}>{{ $genre }}</option>
@@ -35,11 +35,77 @@
     </form>
 </div>
 
-<!-- Table -->
-<div class="bg-[#16162a] rounded-xl border border-white/10 overflow-hidden">
-    <div class="overflow-x-auto" id="movies-table">
-        @include('admin.movies.partials.table')
+<!-- Desktop Table -->
+<div class="desktop-table">
+    <div class="bg-[#16162a] rounded-xl border border-white/10 overflow-hidden">
+        <div class="overflow-x-auto" id="movies-table">
+            @include('admin.movies.partials.table')
+        </div>
     </div>
+</div>
+
+<!-- Mobile Cards -->
+<div class="mobile-cards">
+    <div class="space-y-3 p-1" id="movies-cards">
+        @forelse($movies as $movie)
+            <div class="mobile-card">
+                <div class="flex items-start gap-3 mb-3">
+                    <img src="{{ $movie->poster_url }}" alt="" class="w-16 h-24 object-cover rounded-lg">
+                    <div class="flex-1">
+                        <h3 class="text-white font-semibold">{{ $movie->title }}</h3>
+                        <p class="text-gray-400 text-sm">{{ Str::limit($movie->genre, 30) }}</p>
+                        @if($movie->release_date)
+                            <p class="text-gray-500 text-xs mt-1">{{ $movie->release_date->format('d M Y') }}</p>
+                        @endif
+                    </div>
+                </div>
+                <div class="mobile-card-row">
+                    <span class="mobile-card-label">Durasi</span>
+                    <span class="mobile-card-value">{{ $movie->duration }} min</span>
+                </div>
+                <div class="mobile-card-row">
+                    <span class="mobile-card-label">Rating</span>
+                    <span class="mobile-card-value flex items-center gap-1">
+                        <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                        </svg>
+                        {{ number_format($movie->rating, 1) }}
+                    </span>
+                </div>
+                <div class="mobile-card-row">
+                    <span class="mobile-card-label">Status</span>
+                    <span class="mobile-card-value">
+                        @if($movie->status === 'now_playing')
+                            <span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded-full">Tayang</span>
+                        @elseif($movie->status === 'coming_soon')
+                            <span class="px-2 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded-full">Segera</span>
+                        @else
+                            <span class="px-2 py-1 bg-gray-500/20 text-gray-400 text-xs rounded-full">Selesai</span>
+                        @endif
+                    </span>
+                </div>
+                <div class="flex items-center gap-2 mt-3 pt-3 border-t border-white/10">
+                    <a href="{{ route('admin.movies.edit', $movie) }}" class="flex-1 px-3 py-2 bg-white/10 text-white text-center text-sm rounded-lg hover:bg-white/20">
+                        Edit
+                    </a>
+                    <form id="delete-movie-mobile-{{ $movie->id }}" action="{{ route('admin.movies.destroy', $movie) }}" method="POST" class="flex-1">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" @click="confirmModal('delete-movie-mobile-{{ $movie->id }}')" class="w-full px-3 py-2 bg-red-500/20 text-red-400 text-sm rounded-lg hover:bg-red-500/30">
+                            Hapus
+                        </button>
+                    </form>
+                </div>
+            </div>
+        @empty
+            <div class="text-center py-12 text-gray-500">Belum ada film</div>
+        @endforelse
+    </div>
+    @if($movies->hasPages())
+        <div class="mt-4">
+            {{ $movies->withQueryString()->links() }}
+        </div>
+    @endif
 </div>
 
 <!-- TMDB Import Modal -->
