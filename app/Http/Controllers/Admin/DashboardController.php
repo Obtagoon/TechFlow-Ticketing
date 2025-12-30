@@ -28,6 +28,7 @@ class DashboardController extends Controller
                 ->whereDate('paid_at', today())
                 ->sum('total_price'),
             'total_users' => User::where('role', 'user')->count(),
+            'new_users_today' => User::where('role', 'user')->whereDate('created_at', today())->count(),
             'total_cinemas' => Cinema::count(),
         ];
 
