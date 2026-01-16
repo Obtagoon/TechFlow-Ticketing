@@ -1,4 +1,13 @@
-<x-layouts.app title="Bantuan" description="Pusat bantuan TechFlow Ticketing - Temukan jawaban untuk pertanyaan Anda tentang pemesanan tiket bioskop">
+<?php if (isset($component)) { $__componentOriginal5863877a5171c196453bfa0bd807e410 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal5863877a5171c196453bfa0bd807e410 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.layouts.app','data' => ['title' => 'Bantuan','description' => 'Pusat bantuan TechFlow Ticketing - Temukan jawaban untuk pertanyaan Anda tentang pemesanan tiket bioskop']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('layouts.app'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['title' => 'Bantuan','description' => 'Pusat bantuan TechFlow Ticketing - Temukan jawaban untuk pertanyaan Anda tentang pemesanan tiket bioskop']); ?>
     <!-- FAQ Section -->
     <section class="py-16 mt-8">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -37,7 +46,7 @@
                             <div class="space-y-3">
                                 <div class="flex items-start gap-3 p-3 bg-[#0f0f1a]/80 rounded-xl border border-white/5">
                                     <div class="w-6 h-6 rounded-full bg-[#e50914] text-white text-xs font-bold flex items-center justify-center flex-shrink-0">1</div>
-                                    <p class="text-gray-300 text-sm">Pilih film dari halaman <a href="{{ route('movies.index') }}" class="text-[#e50914] hover:underline font-medium">Film</a></p>
+                                    <p class="text-gray-300 text-sm">Pilih film dari halaman <a href="<?php echo e(route('movies.index')); ?>" class="text-[#e50914] hover:underline font-medium">Film</a></p>
                                 </div>
                                 <div class="flex items-start gap-3 p-3 bg-[#0f0f1a]/80 rounded-xl border border-white/5">
                                     <div class="w-6 h-6 rounded-full bg-[#e50914] text-white text-xs font-bold flex items-center justify-center flex-shrink-0">2</div>
@@ -342,4 +351,14 @@
             </div>
         </div>
     </section>
-</x-layouts.app>
+ <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal5863877a5171c196453bfa0bd807e410)): ?>
+<?php $attributes = $__attributesOriginal5863877a5171c196453bfa0bd807e410; ?>
+<?php unset($__attributesOriginal5863877a5171c196453bfa0bd807e410); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal5863877a5171c196453bfa0bd807e410)): ?>
+<?php $component = $__componentOriginal5863877a5171c196453bfa0bd807e410; ?>
+<?php unset($__componentOriginal5863877a5171c196453bfa0bd807e410); ?>
+<?php endif; ?>
+<?php /**PATH D:\laragon\www\PrakWeb2025_A_233040022\tubes\TechFlow-Ticketing\resources\views/help.blade.php ENDPATH**/ ?>

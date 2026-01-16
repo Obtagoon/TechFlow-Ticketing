@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\ShowtimeGenerator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -27,6 +28,28 @@ class Movie extends Model
         'release_date' => 'date',
         'rating' => 'decimal:1',
     ];
+
+    /**
+     * Boot the model.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Auto-generate showtimes when movie is created with status 'now_playing'
+        static::created(function ($movie) {
+            if ($movie->status === 'now_playing') {
+                app(ShowtimeGenerator::class)->generateForMovie($movie);
+            }
+        });
+
+        // Auto-generate showtimes when movie status changes to 'now_playing'
+        static::updated(function ($movie) {
+            if ($movie->wasChanged('status') && $movie->status === 'now_playing') {
+                app(ShowtimeGenerator::class)->generateForMovie($movie);
+            }
+        });
+    }
 
     /**
      * Get the showtimes for the movie.

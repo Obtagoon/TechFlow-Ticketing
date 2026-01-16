@@ -117,54 +117,7 @@ class BookingController extends Controller
         return view('booking.checkout', compact('booking'));
     }
 
-    /**
-     * Process payment - Upload payment proof
-     */
-    public function processPayment(Request $request, Booking $booking)
-    {
-        // Verify ownership
-        if ($booking->user_id !== Auth::id()) {
-            abort(403);
-        }
 
-        // Check if already paid or expired
-        if (!in_array($booking->status, ['pending', 'rejected'])) {
-            return redirect()->route('my-bookings')
-                ->withErrors(['error' => 'Pesanan tidak dapat diproses.']);
-        }
-
-        if ($booking->isExpired()) {
-            $booking->update(['status' => 'expired']);
-            return redirect()->route('movies.show', $booking->showtime->movie)
-                ->withErrors(['error' => 'Waktu pemesanan sudah habis.']);
-        }
-
-        $validated = $request->validate([
-            'payment_method' => ['required', 'in:bca,mandiri,bni'],
-            'payment_proof' => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
-            'payment_notes' => ['nullable', 'string', 'max:500'],
-        ], [
-            'payment_proof.required' => 'Bukti pembayaran wajib diupload.',
-            'payment_proof.image' => 'File harus berupa gambar.',
-            'payment_proof.mimes' => 'Format gambar harus JPG, JPEG, atau PNG.',
-            'payment_proof.max' => 'Ukuran gambar maksimal 2MB.',
-        ]);
-
-        // Store payment proof
-        $path = $request->file('payment_proof')->store('payment_proofs', 'public');
-
-        // Update booking with payment info
-        $booking->update([
-            'payment_method' => $validated['payment_method'],
-            'payment_proof' => $path,
-            'payment_notes' => $validated['payment_notes'] ?? null,
-            'status' => 'waiting_confirmation',
-            'admin_notes' => null, // Clear previous rejection notes
-        ]);
-
-        return redirect()->route('my-bookings')
-            ->with('success', 'Bukti pembayaran berhasil diupload. Menunggu verifikasi admin.');
-    }
 
     /**
      * Show e-ticket

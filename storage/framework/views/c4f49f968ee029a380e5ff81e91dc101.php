@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>E-Ticket - {{ $booking->booking_code }}</title>
+    <title>E-Ticket - <?php echo e($booking->booking_code); ?></title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Arial, sans-serif; background: #f5f5f5; }
@@ -39,45 +39,45 @@
         <div class="content">
             <div class="movie-info">
                 <div style="flex: 1;">
-                    <div class="movie-title">{{ $booking->showtime->movie->title }}</div>
-                    <div class="movie-meta">{{ $booking->showtime->studio->type_label }} • {{ $booking->showtime->movie->duration }} menit</div>
+                    <div class="movie-title"><?php echo e($booking->showtime->movie->title); ?></div>
+                    <div class="movie-meta"><?php echo e($booking->showtime->studio->type_label); ?> • <?php echo e($booking->showtime->movie->duration); ?> menit</div>
                 </div>
             </div>
 
             <div class="details">
                 <div class="detail-row">
                     <span class="detail-label">Bioskop</span>
-                    <span class="detail-value">{{ $booking->showtime->studio->cinema->name }}</span>
+                    <span class="detail-value"><?php echo e($booking->showtime->studio->cinema->name); ?></span>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">Studio</span>
-                    <span class="detail-value">{{ $booking->showtime->studio->name }}</span>
+                    <span class="detail-value"><?php echo e($booking->showtime->studio->name); ?></span>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">Tanggal</span>
-                    <span class="detail-value">{{ $booking->showtime->show_date->format('l, d M Y') }}</span>
+                    <span class="detail-value"><?php echo e($booking->showtime->show_date->format('l, d M Y')); ?></span>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">Jam</span>
-                    <span class="detail-value">{{ $booking->showtime->formatted_time }} WIB</span>
+                    <span class="detail-value"><?php echo e($booking->showtime->formatted_time); ?> WIB</span>
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">Nama</span>
-                    <span class="detail-value">{{ $booking->user->name }}</span>
+                    <span class="detail-value"><?php echo e($booking->user->name); ?></span>
                 </div>
             </div>
 
             <div class="seats">
                 <div class="seats-label">KURSI</div>
-                <div class="seats-value">{{ $booking->seat_codes }}</div>
+                <div class="seats-value"><?php echo e($booking->seat_codes); ?></div>
             </div>
 
             <div class="booking-code">
                 <div class="booking-code-label">KODE BOOKING</div>
                 <div class="qr-code" style="margin: 10px 0;">
-                    <img src="data:image/svg+xml;base64,{{ base64_encode(QrCode::format('svg')->size(120)->generate($booking->booking_code)) }}" alt="QR Code" style="display: block; margin: 0 auto; width: 120px; height: 120px;">
+                    <img src="data:image/svg+xml;base64,<?php echo e(base64_encode(QrCode::format('svg')->size(120)->generate($booking->booking_code))); ?>" alt="QR Code" style="display: block; margin: 0 auto; width: 120px; height: 120px;">
                 </div>
-                <div class="booking-code-value">{{ $booking->booking_code }}</div>
+                <div class="booking-code-value"><?php echo e($booking->booking_code); ?></div>
             </div>
         </div>
 
@@ -88,3 +88,4 @@
     </div>
 </body>
 </html>
+<?php /**PATH D:\laragon\www\PrakWeb2025_A_233040022\tubes\TechFlow-Ticketing\resources\views/pdf/ticket.blade.php ENDPATH**/ ?>

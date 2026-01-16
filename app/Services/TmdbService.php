@@ -60,10 +60,23 @@ class TmdbService
         $cacheKey = "tmdb_movie_{$tmdbId}";
         
         return Cache::remember($cacheKey, 3600, function () use ($tmdbId) {
+            // First try Indonesian
             $movie = $this->get("/movie/{$tmdbId}", [
                 'language' => 'id-ID',
                 'append_to_response' => 'videos,credits',
             ]);
+            
+            // If overview is empty, fetch English version as fallback
+            if (empty($movie['overview']) && !isset($movie['error'])) {
+                $movieEn = $this->get("/movie/{$tmdbId}", [
+                    'language' => 'en-US',
+                    'append_to_response' => 'videos,credits',
+                ]);
+                
+                if (!empty($movieEn['overview'])) {
+                    $movie['overview'] = $movieEn['overview'];
+                }
+            }
             
             return $movie['success'] ?? true ? $movie : null;
         });

@@ -87,41 +87,5 @@ class BookingController extends Controller
         
         return back()->with('success', 'Pemesanan berhasil dibatalkan.');
     }
-
-    /**
-     * Approve payment - Confirm payment proof is valid
-     */
-    public function approvePayment(Booking $booking)
-    {
-        if ($booking->status !== 'waiting_confirmation') {
-            return back()->withErrors(['error' => 'Hanya pembayaran dengan status menunggu verifikasi yang dapat disetujui.']);
-        }
-
-        $booking->markAsPaid($booking->payment_method ?? 'transfer');
-
-        return back()->with('success', 'Pembayaran berhasil dikonfirmasi. E-Ticket sudah tersedia untuk customer.');
-    }
-
-    /**
-     * Reject payment - Payment proof is invalid
-     */
-    public function rejectPayment(Request $request, Booking $booking)
-    {
-        if ($booking->status !== 'waiting_confirmation') {
-            return back()->withErrors(['error' => 'Hanya pembayaran dengan status menunggu verifikasi yang dapat ditolak.']);
-        }
-
-        $validated = $request->validate([
-            'admin_notes' => ['required', 'string', 'max:500'],
-        ], [
-            'admin_notes.required' => 'Alasan penolakan wajib diisi.',
-        ]);
-
-        $booking->update([
-            'status' => 'rejected',
-            'admin_notes' => $validated['admin_notes'],
-        ]);
-
-        return back()->with('success', 'Pembayaran ditolak. Customer akan diminta upload ulang bukti pembayaran.');
-    }
 }
+

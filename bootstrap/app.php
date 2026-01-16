@@ -14,6 +14,11 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
         ]);
+        
+        // Exclude Midtrans webhook from CSRF verification
+        $middleware->validateCsrfTokens(except: [
+            'payment/notification',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

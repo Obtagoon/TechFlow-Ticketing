@@ -1,8 +1,17 @@
-<x-layouts.app :title="'Checkout - ' . $booking->showtime->movie->title">
+<?php if (isset($component)) { $__componentOriginal5863877a5171c196453bfa0bd807e410 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal5863877a5171c196453bfa0bd807e410 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.layouts.app','data' => ['title' => 'Checkout - ' . $booking->showtime->movie->title]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('layouts.app'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['title' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute('Checkout - ' . $booking->showtime->movie->title)]); ?>
 <div class="py-8">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Rejection Notice -->
-        @if($booking->status === 'rejected' && $booking->admin_notes)
+        <?php if($booking->status === 'rejected' && $booking->admin_notes): ?>
             <div class="bg-red-500/20 border border-red-500/50 rounded-xl p-4 mb-8">
                 <div class="flex items-start gap-3">
                     <svg class="w-6 h-6 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -10,17 +19,17 @@
                     </svg>
                     <div>
                         <p class="font-semibold text-red-400">Pembayaran Ditolak</p>
-                        <p class="text-red-300 text-sm mt-1">{{ $booking->admin_notes }}</p>
+                        <p class="text-red-300 text-sm mt-1"><?php echo e($booking->admin_notes); ?></p>
                         <p class="text-red-300/70 text-sm mt-2">Silakan upload ulang bukti pembayaran yang valid.</p>
                     </div>
                 </div>
             </div>
-        @endif
+        <?php endif; ?>
 
         <!-- Timer Warning -->
-        @if($booking->status === 'pending')
+        <?php if($booking->status === 'pending'): ?>
         <div x-data="{ 
-            timeLeft: Math.max(0, Math.floor((new Date('{{ $booking->expires_at->toISOString() }}') - new Date()) / 1000)),
+            timeLeft: Math.max(0, Math.floor((new Date('<?php echo e($booking->expires_at->toISOString()); ?>') - new Date()) / 1000)),
             formatTime(seconds) {
                 const m = Math.floor(seconds / 60);
                 const s = seconds % 60;
@@ -37,7 +46,7 @@
                 <span class="text-xl font-bold text-yellow-500" x-text="formatTime(timeLeft)"></span>
             </div>
         </div>
-        @endif
+        <?php endif; ?>
 
         <div class="grid lg:grid-cols-2 gap-8">
             <!-- Order Summary -->
@@ -46,12 +55,12 @@
 
                 <!-- Movie Info -->
                 <div class="flex gap-4 mb-6 pb-6 border-b border-white/10">
-                    <img src="{{ $booking->showtime->movie->poster_url }}" alt="{{ $booking->showtime->movie->title }}" 
+                    <img src="<?php echo e($booking->showtime->movie->poster_url); ?>" alt="<?php echo e($booking->showtime->movie->title); ?>" 
                          class="w-24 rounded-lg">
                     <div>
-                        <h3 class="font-semibold text-white">{{ $booking->showtime->movie->title }}</h3>
-                        <p class="text-sm text-gray-400 mt-1">{{ $booking->showtime->studio->type_label }}</p>
-                        <p class="text-sm text-gray-400">{{ $booking->showtime->movie->duration }} menit</p>
+                        <h3 class="font-semibold text-white"><?php echo e($booking->showtime->movie->title); ?></h3>
+                        <p class="text-sm text-gray-400 mt-1"><?php echo e($booking->showtime->studio->type_label); ?></p>
+                        <p class="text-sm text-gray-400"><?php echo e($booking->showtime->movie->duration); ?> menit</p>
                     </div>
                 </div>
 
@@ -59,39 +68,39 @@
                 <div class="space-y-3 mb-6 pb-6 border-b border-white/10">
                     <div class="flex justify-between">
                         <span class="text-gray-400">Kode Booking</span>
-                        <span class="text-white font-mono">{{ $booking->booking_code }}</span>
+                        <span class="text-white font-mono"><?php echo e($booking->booking_code); ?></span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-gray-400">Bioskop</span>
-                        <span class="text-white text-right">{{ $booking->showtime->studio->cinema->name }}</span>
+                        <span class="text-white text-right"><?php echo e($booking->showtime->studio->cinema->name); ?></span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-gray-400">Studio</span>
-                        <span class="text-white">{{ $booking->showtime->studio->name }}</span>
+                        <span class="text-white"><?php echo e($booking->showtime->studio->name); ?></span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-gray-400">Tanggal</span>
-                        <span class="text-white">{{ $booking->showtime->formatted_date }}</span>
+                        <span class="text-white"><?php echo e($booking->showtime->formatted_date); ?></span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-gray-400">Jam</span>
-                        <span class="text-white">{{ $booking->showtime->formatted_time }}</span>
+                        <span class="text-white"><?php echo e($booking->showtime->formatted_time); ?></span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-gray-400">Kursi</span>
-                        <span class="text-white">{{ $booking->seat_codes }}</span>
+                        <span class="text-white"><?php echo e($booking->seat_codes); ?></span>
                     </div>
                 </div>
 
                 <!-- Price Breakdown -->
                 <div class="space-y-3">
                     <div class="flex justify-between">
-                        <span class="text-gray-400">Harga Tiket ({{ $booking->total_seats }}x)</span>
-                        <span class="text-white">{{ $booking->showtime->formatted_price }}</span>
+                        <span class="text-gray-400">Harga Tiket (<?php echo e($booking->total_seats); ?>x)</span>
+                        <span class="text-white"><?php echo e($booking->showtime->formatted_price); ?></span>
                     </div>
                     <div class="flex justify-between pt-3 border-t border-white/10">
                         <span class="text-lg font-semibold text-white">Total Pembayaran</span>
-                        <span class="text-lg font-bold text-[#e50914]">{{ $booking->formatted_price }}</span>
+                        <span class="text-lg font-bold text-[#e50914]"><?php echo e($booking->formatted_price); ?></span>
                     </div>
                 </div>
             </div>
@@ -100,18 +109,29 @@
             <div class="space-y-6">
                 <!-- Midtrans Payment -->
                 <div class="bg-[#16162a] rounded-xl p-6 border border-white/10">
-                    <h2 class="text-xl font-bold text-white mb-4">Pembayaran</h2>
+                    <h2 class="text-xl font-bold text-white mb-4">Pilih Metode Pembayaran</h2>
                     <p class="text-gray-400 text-sm mb-6">
-                        Klik tombol "Bayar Sekarang" untuk membuka halaman pembayaran. Anda dapat memilih metode pembayaran seperti QRIS, Virtual Account, E-Wallet, atau Kartu Kredit.
+                        Klik tombol di bawah untuk memilih metode pembayaran. Tersedia QRIS, Virtual Account, E-Wallet, dan Kartu Kredit.
                     </p>
                     
-                    <!-- Payment Methods Info -->
-                    <div class="flex flex-wrap gap-2 mb-6">
-                        <span class="px-3 py-1.5 bg-[#0f0f1a] rounded-lg text-gray-400 text-xs border border-white/5">🔲 QRIS</span>
-                        <span class="px-3 py-1.5 bg-[#0f0f1a] rounded-lg text-gray-400 text-xs border border-white/5">💚 GoPay</span>
-                        <span class="px-3 py-1.5 bg-[#0f0f1a] rounded-lg text-gray-400 text-xs border border-white/5">🧡 ShopeePay</span>
-                        <span class="px-3 py-1.5 bg-[#0f0f1a] rounded-lg text-gray-400 text-xs border border-white/5">🏦 Virtual Account</span>
-                        <span class="px-3 py-1.5 bg-[#0f0f1a] rounded-lg text-gray-400 text-xs border border-white/5">💳 Kartu Kredit/Debit</span>
+                    <!-- Payment Methods Preview -->
+                    <div class="grid grid-cols-4 gap-3 mb-6">
+                        <div class="bg-[#0f0f1a] rounded-lg p-3 text-center border border-white/5">
+                            <div class="text-2xl mb-1">📱</div>
+                            <span class="text-gray-400 text-xs">QRIS</span>
+                        </div>
+                        <div class="bg-[#0f0f1a] rounded-lg p-3 text-center border border-white/5">
+                            <div class="text-2xl mb-1">🏦</div>
+                            <span class="text-gray-400 text-xs">Bank Transfer</span>
+                        </div>
+                        <div class="bg-[#0f0f1a] rounded-lg p-3 text-center border border-white/5">
+                            <div class="text-2xl mb-1">💳</div>
+                            <span class="text-gray-400 text-xs">E-Wallet</span>
+                        </div>
+                        <div class="bg-[#0f0f1a] rounded-lg p-3 text-center border border-white/5">
+                            <div class="text-2xl mb-1">💎</div>
+                            <span class="text-gray-400 text-xs">Credit Card</span>
+                        </div>
                     </div>
 
                     <button type="button" 
@@ -134,10 +154,10 @@
                     <p id="payment-error" class="hidden text-red-400 text-sm mt-3 text-center"></p>
 
                     <!-- Cancel -->
-                    <form id="cancel-checkout-{{ $booking->id }}" action="{{ route('booking.cancel', $booking) }}" method="POST" class="hidden">
-                        @csrf
+                    <form id="cancel-checkout-<?php echo e($booking->id); ?>" action="<?php echo e(route('booking.cancel', $booking)); ?>" method="POST" class="hidden">
+                        <?php echo csrf_field(); ?>
                     </form>
-                    <button type="button" onclick="confirmModal('cancel-checkout-{{ $booking->id }}')"
+                    <button type="button" onclick="confirmModal('cancel-checkout-<?php echo e($booking->id); ?>')"
                             class="w-full py-3 text-gray-400 hover:text-red-400 transition-colors text-sm mt-4">
                         Batalkan Pesanan
                     </button>
@@ -148,7 +168,7 @@
 </div>
 
 <!-- Midtrans Snap JS -->
-<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}"></script>
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="<?php echo e(config('midtrans.client_key')); ?>"></script>
 <script>
     document.getElementById('pay-button').addEventListener('click', function() {
         const payButton = document.getElementById('pay-button');
@@ -161,11 +181,11 @@
         errorText.classList.add('hidden');
         
         // Create transaction
-        fetch('{{ route("payment.create", $booking) }}', {
+        fetch('<?php echo e(route("payment.create", $booking)); ?>', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>',
                 'Accept': 'application/json',
             },
         })
@@ -178,13 +198,13 @@
             // Open Snap popup
             window.snap.pay(data.snap_token, {
                 onSuccess: function(result) {
-                    window.location.href = '{{ route("payment.finish") }}?order_id=' + result.order_id + '&transaction_status=' + result.transaction_status;
+                    window.location.href = '<?php echo e(route("payment.finish")); ?>?order_id=' + result.order_id + '&transaction_status=' + result.transaction_status;
                 },
                 onPending: function(result) {
-                    window.location.href = '{{ route("payment.unfinish") }}?order_id=' + result.order_id;
+                    window.location.href = '<?php echo e(route("payment.unfinish")); ?>?order_id=' + result.order_id;
                 },
                 onError: function(result) {
-                    window.location.href = '{{ route("payment.error") }}?order_id=' + result.order_id;
+                    window.location.href = '<?php echo e(route("payment.error")); ?>?order_id=' + result.order_id;
                 },
                 onClose: function() {
                     // User closed the popup without completing payment
@@ -202,5 +222,15 @@
         });
     });
 </script>
-</x-layouts.app>
+ <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal5863877a5171c196453bfa0bd807e410)): ?>
+<?php $attributes = $__attributesOriginal5863877a5171c196453bfa0bd807e410; ?>
+<?php unset($__attributesOriginal5863877a5171c196453bfa0bd807e410); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal5863877a5171c196453bfa0bd807e410)): ?>
+<?php $component = $__componentOriginal5863877a5171c196453bfa0bd807e410; ?>
+<?php unset($__componentOriginal5863877a5171c196453bfa0bd807e410); ?>
+<?php endif; ?>
 
+<?php /**PATH C:\Users\LENOVO\Desktop\tubes\TechFlow-Ticketing\resources\views/booking/checkout.blade.php ENDPATH**/ ?>

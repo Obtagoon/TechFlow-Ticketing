@@ -79,6 +79,10 @@
                                            class="px-4 py-2 bg-yellow-500 text-black text-sm font-medium rounded-lg hover:opacity-90 transition-opacity">
                                             Bayar Sekarang
                                         </a>
+                                        <a href="{{ route('payment.check', $booking) }}" 
+                                           class="px-4 py-2 bg-blue-600/20 text-blue-400 text-sm font-medium rounded-lg hover:bg-blue-600/30 transition-colors">
+                                            Cek Status
+                                        </a>
                                         <form id="cancel-booking-{{ $booking->id }}" action="{{ route('booking.cancel', $booking) }}" method="POST" class="hidden">
                                             @csrf
                                         </form>

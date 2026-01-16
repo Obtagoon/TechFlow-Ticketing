@@ -25,6 +25,9 @@ class Booking extends Model
         'admin_notes',
         'paid_at',
         'expires_at',
+        'snap_token',
+        'midtrans_transaction_id',
+        'midtrans_payment_type',
     ];
 
     protected $casts = [

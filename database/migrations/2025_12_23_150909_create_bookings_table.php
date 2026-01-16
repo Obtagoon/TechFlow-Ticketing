@@ -25,6 +25,12 @@ return new class extends Migration
             $table->text('admin_notes')->nullable();
             $table->timestamp('paid_at')->nullable();
             $table->timestamp('expires_at')->nullable();
+            
+            // Midtrans fields
+            $table->string('snap_token')->nullable();
+            $table->string('midtrans_transaction_id')->nullable();
+            $table->string('midtrans_payment_type')->nullable();
+            
             $table->timestamps();
             
             $table->index(['user_id', 'status']);

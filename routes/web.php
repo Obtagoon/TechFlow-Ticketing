@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\MovieController as AdminMovieController;
 use App\Http\Controllers\Admin\CinemaController as AdminCinemaController;
@@ -49,14 +50,23 @@ Route::middleware('auth')->group(function () {
     Route::get('/booking/{showtime}/seats', [BookingController::class, 'selectSeats'])->name('booking.seats');
     Route::post('/booking/{showtime}/seats', [BookingController::class, 'processSeats']);
     Route::get('/booking/{booking}/checkout', [BookingController::class, 'checkout'])->name('booking.checkout');
-    Route::post('/booking/{booking}/pay', [BookingController::class, 'processPayment'])->name('booking.pay');
     Route::get('/booking/{booking}/ticket', [BookingController::class, 'showTicket'])->name('booking.ticket');
     Route::get('/booking/{booking}/ticket/download', [BookingController::class, 'downloadTicket'])->name('booking.ticket.download');
     Route::post('/booking/{booking}/cancel', [BookingController::class, 'cancel'])->name('booking.cancel');
     
+    // Midtrans Payment Routes
+    Route::post('/payment/{booking}/create', [PaymentController::class, 'createTransaction'])->name('payment.create');
+    Route::get('/payment/finish', [PaymentController::class, 'finish'])->name('payment.finish');
+    Route::get('/payment/unfinish', [PaymentController::class, 'unfinish'])->name('payment.unfinish');
+    Route::get('/payment/error', [PaymentController::class, 'error'])->name('payment.error');
+    Route::get('/payment/{booking}/check', [PaymentController::class, 'checkStatus'])->name('payment.check');
+    
     // User Bookings
     Route::get('/my-bookings', [BookingController::class, 'myBookings'])->name('my-bookings');
 });
+
+// Midtrans Webhook (no auth required)
+Route::post('/payment/notification', [PaymentController::class, 'handleNotification'])->name('payment.notification');
 
 /*
 |--------------------------------------------------------------------------
@@ -89,8 +99,6 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
     Route::get('/bookings/{booking}', [AdminBookingController::class, 'show'])->name('bookings.show');
     Route::patch('/bookings/{booking}/status', [AdminBookingController::class, 'updateStatus'])->name('bookings.update-status');
     Route::post('/bookings/{booking}/cancel', [AdminBookingController::class, 'cancel'])->name('bookings.cancel');
-    Route::post('/bookings/{booking}/approve', [AdminBookingController::class, 'approvePayment'])->name('bookings.approve');
-    Route::post('/bookings/{booking}/reject', [AdminBookingController::class, 'rejectPayment'])->name('bookings.reject');
     
     // Reports
     Route::get('/reports', [AdminReportController::class, 'index'])->name('reports.index');

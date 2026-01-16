@@ -97,10 +97,18 @@ class MovieController extends Controller
             $validated['backdrop'] = $request->file('backdrop')->store('movies/backdrops', 'public');
         }
 
-        Movie::create($validated);
+        $movie = Movie::create($validated);
 
-        return redirect()->route('admin.movies.index')
-            ->with('success', 'Film berhasil ditambahkan.');
+    $message = 'Film berhasil ditambahkan.';
+    if ($movie->status === 'now_playing') {
+        $showtimeCount = $movie->showtimes()->count();
+        if ($showtimeCount > 0) {
+            $message .= " {$showtimeCount} jadwal tayang otomatis dibuat untuk 7 hari ke depan.";
+        }
+    }
+
+    return redirect()->route('admin.movies.index')
+        ->with('success', $message);
     }
 
     /**
@@ -158,10 +166,19 @@ class MovieController extends Controller
             $validated['backdrop'] = $request->file('backdrop')->store('movies/backdrops', 'public');
         }
 
-        $movie->update($validated);
+        $oldStatus = $movie->status;
+    $movie->update($validated);
 
-        return redirect()->route('admin.movies.index')
-            ->with('success', 'Film berhasil diperbarui.');
+    $message = 'Film berhasil diperbarui.';
+    if ($oldStatus !== 'now_playing' && $movie->status === 'now_playing') {
+        $showtimeCount = $movie->showtimes()->where('show_date', '>=', today())->count();
+        if ($showtimeCount > 0) {
+            $message .= " {$showtimeCount} jadwal tayang otomatis dibuat untuk 7 hari ke depan.";
+        }
+    }
+
+    return redirect()->route('admin.movies.index')
+        ->with('success', $message);
     }
 
     /**
