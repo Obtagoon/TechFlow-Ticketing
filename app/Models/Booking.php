@@ -20,8 +20,6 @@ class Booking extends Model
         'total_price',
         'status',
         'payment_method',
-        'payment_proof',
-        'payment_notes',
         'admin_notes',
         'paid_at',
         'expires_at',
@@ -113,25 +111,14 @@ class Booking extends Model
     {
         return match($this->status) {
             'pending' => ['label' => 'Menunggu Pembayaran', 'color' => 'yellow'],
-            'waiting_confirmation' => ['label' => 'Menunggu Verifikasi', 'color' => 'blue'],
             'paid' => ['label' => 'Lunas', 'color' => 'green'],
             'cancelled' => ['label' => 'Dibatalkan', 'color' => 'red'],
-            'rejected' => ['label' => 'Ditolak', 'color' => 'red'],
             'expired' => ['label' => 'Kadaluarsa', 'color' => 'gray'],
             default => ['label' => ucfirst($this->status), 'color' => 'gray'],
         };
     }
 
-    /**
-     * Get payment proof URL
-     */
-    public function getPaymentProofUrlAttribute(): ?string
-    {
-        if (!$this->payment_proof) {
-            return null;
-        }
-        return asset('storage/' . $this->payment_proof);
-    }
+
 
     /**
      * Check if booking is expired
@@ -176,14 +163,8 @@ class Booking extends Model
      */
     public function scopeActive($query)
     {
-        return $query->whereIn('status', ['pending', 'waiting_confirmation', 'paid']);
+        return $query->whereIn('status', ['pending', 'paid']);
     }
 
-    /**
-     * Scope for bookings waiting for admin confirmation
-     */
-    public function scopeWaitingConfirmation($query)
-    {
-        return $query->where('status', 'waiting_confirmation');
-    }
+
 }

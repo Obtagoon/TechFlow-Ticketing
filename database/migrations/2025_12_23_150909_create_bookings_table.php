@@ -18,10 +18,8 @@ return new class extends Migration
             $table->string('booking_code')->unique();
             $table->integer('total_seats');
             $table->decimal('total_price', 12, 2);
-            $table->string('status', 50)->default('pending'); // pending, waiting_confirmation, paid, cancelled, expired, rejected
+            $table->string('status', 50)->default('pending'); // pending, paid, cancelled, expired
             $table->string('payment_method')->nullable();
-            $table->string('payment_proof')->nullable();
-            $table->text('payment_notes')->nullable();
             $table->text('admin_notes')->nullable();
             $table->timestamp('paid_at')->nullable();
             $table->timestamp('expires_at')->nullable();
