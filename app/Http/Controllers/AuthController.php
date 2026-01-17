@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -93,4 +94,55 @@ class AuthController extends Controller
 
         return redirect()->route('home')->with('success', 'Anda telah berhasil logout.');
     }
+
+    /**
+     * Redirect to Google OAuth
+     */
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    /**
+     * Handle Google OAuth callback
+     */
+    public function handleGoogleCallback()
+    {
+        try {
+            $googleUser = Socialite::driver('google')->user();
+            
+            // Check if user exists with this Google ID
+            $user = User::where('google_id', $googleUser->getId())->first();
+            
+            if (!$user) {
+                // Check if email already exists
+                $user = User::where('email', $googleUser->getEmail())->first();
+                
+                if ($user) {
+                    // Link Google account to existing user
+                    $user->update([
+                        'google_id' => $googleUser->getId(),
+                        'avatar' => $user->avatar ?? $googleUser->getAvatar(),
+                    ]);
+                } else {
+                    // Create new user
+                    $user = User::create([
+                        'name' => $googleUser->getName(),
+                        'email' => $googleUser->getEmail(),
+                        'google_id' => $googleUser->getId(),
+                        'avatar' => $googleUser->getAvatar(),
+                        'password' => null,
+                    ]);
+                }
+            }
+            
+            Auth::login($user, true);
+            
+            return redirect()->route('home')->with('success', 'Berhasil login dengan Google!');
+            
+        } catch (\Exception $e) {
+            return redirect()->route('login')->with('error', 'Gagal login dengan Google. Silakan coba lagi.');
+        }
+    }
 }
+

@@ -49,6 +49,9 @@
                             Tiket Saya
                         </a>
                     @endauth
+                    <a href="{{ route('help') }}" class="text-sm font-medium text-gray-300 hover:text-white transition-colors {{ request()->routeIs('help') ? 'text-white' : '' }}">
+                        Bantuan
+                    </a>
                 </div>
 
                 <!-- Auth Buttons -->
@@ -71,6 +74,9 @@
                                 @endif
                                 <a href="{{ route('my-bookings') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-white">
                                     Tiket Saya
+                                </a>
+                                <a href="{{ route('profile') }}" class="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-white">
+                                    Profil Saya
                                 </a>
                                 <hr class="my-2 border-white/10">
                                 <form action="{{ route('logout') }}" method="POST">

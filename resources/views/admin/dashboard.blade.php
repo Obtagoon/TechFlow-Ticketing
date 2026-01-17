@@ -21,7 +21,7 @@
             <div class="flex-1 min-w-0">
                 <p class="text-gray-400 text-xs sm:text-sm">Total Pemesanan</p>
                 <p class="text-2xl sm:text-3xl font-bold text-white mt-1">{{ $stats['total_bookings'] }}</p>
-                <p class="text-xs sm:text-sm text-gray-500 mt-1">{{ $stats['today_bookings'] }} hari ini</p>
+                <p class="text-xs sm:text-sm text-gray-500 mt-1">{{ $stats['today_bookings'] }} pesanan hari ini</p>
             </div>
             <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/20 rounded-xl flex items-center justify-center flex-shrink-0 ml-2">
                 <svg class="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -51,7 +51,7 @@
             <div class="flex-1 min-w-0">
                 <p class="text-gray-400 text-xs sm:text-sm">Total User</p>
                 <p class="text-2xl sm:text-3xl font-bold text-white mt-1">{{ $stats['total_users'] }}</p>
-                <p class="text-xs sm:text-sm text-gray-500 mt-1">{{ $stats['new_users_today'] }} baru hari ini</p>
+                <p class="text-xs sm:text-sm text-gray-500 mt-1">{{ $stats['new_users_today'] }} user baru hari ini</p>
             </div>
             <div class="w-12 h-12 bg-yellow-500/20 rounded-xl flex items-center justify-center">
                 <svg class="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
