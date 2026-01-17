@@ -163,6 +163,17 @@ class PaymentController extends Controller
             'payment_method' => $paymentType,
             'paid_at' => now(),
         ]);
+        
+        // Send confirmation email
+        try {
+            \Illuminate\Support\Facades\Mail::to($booking->user->email)
+                ->send(new \App\Mail\BookingConfirmation($booking));
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Failed to send booking confirmation email', [
+                'booking_id' => $booking->id,
+                'error' => $e->getMessage(),
+            ]);
+        }
     }
 
     /**

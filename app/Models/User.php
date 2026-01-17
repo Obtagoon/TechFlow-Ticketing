@@ -21,6 +21,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'google_id',
         'phone',
         'role',
         'avatar',
@@ -71,9 +72,17 @@ class User extends Authenticatable
      */
     public function getAvatarUrlAttribute(): string
     {
-        return $this->avatar 
-            ? asset('storage/' . $this->avatar) 
-            : 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=e50914&color=fff';
+        if (!$this->avatar) {
+            return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=e50914&color=fff';
+        }
+        
+        // Check if avatar is already a full URL (e.g., from Google OAuth)
+        if (str_starts_with($this->avatar, 'http://') || str_starts_with($this->avatar, 'https://')) {
+            return $this->avatar;
+        }
+        
+        // Otherwise, assume it's a local storage path
+        return asset('storage/' . $this->avatar);
     }
 }
 
