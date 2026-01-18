@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\SeatController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\MovieController as AdminMovieController;
 use App\Http\Controllers\Admin\CinemaController as AdminCinemaController;
@@ -84,6 +85,9 @@ Route::middleware('auth')->group(function () {
 
 // Midtrans Webhook (no auth required)
 Route::post('/payment/notification', [PaymentController::class, 'handleNotification'])->name('payment.notification');
+
+// API: Real-time Seat Status
+Route::get('/api/showtime/{showtime}/seats', [SeatController::class, 'getStatus'])->name('api.seats.status');
 
 /*
 |--------------------------------------------------------------------------
