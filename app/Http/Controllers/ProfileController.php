@@ -30,15 +30,27 @@ class ProfileController extends Controller
             'email' => ['required', 'email', 'unique:users,email,' . $user->id],
             'phone' => ['nullable', 'string', 'max:20'],
             'avatar' => ['nullable', 'image', 'max:2048'],
+            'delete_avatar' => ['nullable', 'string'],
         ]);
         
-        if ($request->hasFile('avatar')) {
+        // Handle avatar deletion
+        if ($request->input('delete_avatar') === '1') {
+            if ($user->avatar) {
+                Storage::disk('public')->delete($user->avatar);
+            }
+            $validated['avatar'] = null;
+        }
+        // Handle new avatar upload
+        elseif ($request->hasFile('avatar')) {
             // Delete old avatar
             if ($user->avatar) {
                 Storage::disk('public')->delete($user->avatar);
             }
             $validated['avatar'] = $request->file('avatar')->store('avatars', 'public');
         }
+        
+        // Remove delete_avatar from validated data before saving
+        unset($validated['delete_avatar']);
         
         $user->update($validated);
         
@@ -60,5 +72,20 @@ class ProfileController extends Controller
         ]);
         
         return back()->with('success', 'Password berhasil diperbarui.');
+    }
+
+    /**
+     * Delete user avatar
+     */
+    public function deleteAvatar()
+    {
+        $user = Auth::user();
+        
+        if ($user->avatar) {
+            Storage::disk('public')->delete($user->avatar);
+            $user->update(['avatar' => null]);
+        }
+        
+        return back()->with('success', 'Foto profil berhasil dihapus.');
     }
 }

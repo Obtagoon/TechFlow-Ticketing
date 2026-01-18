@@ -56,7 +56,7 @@
                                                     <div class="seat-booked group relative" 
                                                          data-seat-id="{{ $seat->id }}"
                                                          title="Sudah dipesan">
-                                                        <div class="w-10 h-10 bg-gradient-to-b from-gray-700 to-gray-800 rounded-t-lg cursor-not-allowed flex items-center justify-center text-xs text-gray-500 border-b-4 border-gray-900 shadow-inner">
+                                                        <div class="w-10 h-10 bg-gradient-to-b from-gray-700 to-gray-800 rounded-t-lg cursor-not-allowed flex items-center justify-center text-xs text-gray-500 border border-white/20 border-b-4 border-b-gray-900 shadow-inner">
                                                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                                                 <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
                                                             </svg>
@@ -107,7 +107,7 @@
                                     <span class="text-sm text-gray-400">Dipilih</span>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <div class="w-7 h-7 bg-gradient-to-b from-gray-700 to-gray-800 rounded-t-lg border-b-4 border-gray-900 flex items-center justify-center">
+                                    <div class="w-7 h-7 bg-gradient-to-b from-gray-700 to-gray-800 rounded-t-lg border border-white/20 border-b-4 border-b-gray-900 flex items-center justify-center">
                                         <svg class="w-3 h-3 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
                                         </svg>
@@ -253,7 +253,7 @@
                                 if (label) {
                                     label.outerHTML = `
                                         <div class="seat-booked group relative" data-seat-id="${seatId}">
-                                            <div class="w-9 h-9 bg-gradient-to-b from-gray-700 to-gray-800 rounded-t-lg cursor-not-allowed flex items-center justify-center text-xs text-gray-500 border-b-4 border-gray-900 shadow-inner animate-pulse">
+                                            <div class="w-10 h-10 bg-gradient-to-b from-gray-700 to-gray-800 rounded-t-lg cursor-not-allowed flex items-center justify-center text-xs text-gray-500 border border-white/20 border-b-4 border-b-gray-900 shadow-inner animate-pulse">
                                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
                                                 </svg>
@@ -275,7 +275,7 @@
                             const seatNumber = availableSeat.querySelector('.seat-checkbox').nextElementSibling.textContent.trim();
                             availableSeat.outerHTML = `
                                 <div class="seat-booked group relative" data-seat-id="${seatId}">
-                                    <div class="w-9 h-9 bg-gradient-to-b from-gray-700 to-gray-800 rounded-t-lg cursor-not-allowed flex items-center justify-center text-xs text-gray-500 border-b-4 border-gray-900 shadow-inner">
+                                    <div class="w-10 h-10 bg-gradient-to-b from-gray-700 to-gray-800 rounded-t-lg cursor-not-allowed flex items-center justify-center text-xs text-gray-500 border border-white/20 border-b-4 border-b-gray-900 shadow-inner">
                                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
                                         </svg>
